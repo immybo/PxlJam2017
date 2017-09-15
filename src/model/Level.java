@@ -7,5 +7,5 @@ public interface Level {
 	public void restart();
 	
 	public List<Entity> getEntities();
-	
+	public Player getPlayer();
 }

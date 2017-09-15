@@ -86,6 +86,12 @@ public class AbstractEntity implements Entity {
 		forceX += x;
 		forceY += y;
 	}
+	
+	@Override
+	public void setVelocity(double x, double y) {
+		speedX = x;
+		speedY = y;
+	}
 
 	@Override
 	public void tick(double dt) {
@@ -99,5 +105,10 @@ public class AbstractEntity implements Entity {
 
 		forceX = 0;
 		forceY = 0;
+	}
+
+	@Override
+	public boolean isSolid() {
+		return true;
 	}
 }

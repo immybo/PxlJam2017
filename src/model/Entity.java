@@ -16,4 +16,6 @@ public interface Entity {
 	public void setMass(double mass);
 	public double getXSpeed();
 	public double getYSpeed();
+	public void setVelocity(double xv, double yv);
+	public boolean isSolid();
 }

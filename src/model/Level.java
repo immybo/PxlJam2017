@@ -1,7 +1,6 @@
 package model;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import java.awt.geom.Area;
 import java.util.List;
 
 public class Level {
@@ -14,6 +13,18 @@ public class Level {
 				this.player = (Player)e;
 				break;
 			}
+			for(Entity o : entities) {
+				if(e == o) {
+					continue;
+				}
+				Area ebb = new Area(e.getCollisionBox());
+				Area obb = new Area(o.getCollisionBox());
+				ebb.intersect(obb);
+				if(!ebb.isEmpty()) {
+					e.setVelocity(0, 0);
+					o.setVelocity(0, 0);
+				}
+			}
 		}
 		this.entities = entities;
 	}
@@ -24,7 +35,7 @@ public class Level {
 		}
 	}
 	public void restart() {
-		throw new NotImplementedException();
+		throw new Error("not implemented");
 	}
 	
 	public List<Entity> getEntities() {

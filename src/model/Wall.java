@@ -1,39 +1,28 @@
 package model;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 
-public class Wall implements Block {
+public class Wall extends AbstractEntity implements Block {
+	private double bounciness;
+	private Image texture;
 
-	@Override
-	public int getDepth() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Wall(Point2D position, Shape collisionBox, Image texture, double bounciness, int depth) {
+		super(position, collisionBox, depth);
+		this.bounciness = bounciness;
+		this.texture = texture;
 	}
-
+	
 	@Override
-	public Point2D getPosition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Shape getCollisionBox() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void render(Graphics graphics) {
-		// TODO Auto-generated method stub
+	public void render(Graphics g) {
 		
 	}
-
+	
 	@Override
-	public void setPosition(double x, double y) {
-		// TODO Auto-generated method stub
-		
+	public double getBounciness() {
+		return bounciness;
 	}
 	
 }

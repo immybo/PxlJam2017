@@ -1,5 +1,6 @@
 package view;
 
+import model.Player;
 import model.StatusEffect;
 import sun.plugin.dom.exception.InvalidStateException;
 
@@ -16,9 +17,7 @@ import java.util.Map;
 public class HudPanel extends JPanel {
     private final static int MARGIN = 20;
 
-    private double playerHealth;
-    private double playerMana;
-    private List<StatusEffect> playerStatuses;
+    private Player player;
 
     private Map<StatusEffect, Image> statusImageOn;
     private Map<StatusEffect, Image> statusImageOff;
@@ -27,11 +26,8 @@ public class HudPanel extends JPanel {
     private Color manaPoolColor;
     private Color hudBackgroundColor;
 
-    public HudPanel(){
-        this.playerHealth = 0.7;
-        this.playerMana = 0.7;
-        this.playerStatuses = new ArrayList<StatusEffect>();
-        playerStatuses.add(StatusEffect.POISONED);
+    public HudPanel(Player player){
+        this.player = player;
         statusImageOn = new HashMap<>();
         statusImageOff = new HashMap<>();
         loadStatusImages();
@@ -49,13 +45,11 @@ public class HudPanel extends JPanel {
         }
     }
 
-    public void setPlayerHealth(int currentHealth, int maxHealth) {
-        if (maxHealth == 0) this.playerHealth = 1.0;
-        else this.playerHealth = (currentHealth+0.0)/maxHealth;
-    }
-
     @Override
     public void paint(Graphics g) {
+        double playerHealth = (player.getHealth()+0.0) / player.getMaxHealth();
+        double playerMana = 0.5;
+
         int width = this.getWidth();
         int height = this.getHeight();
 
@@ -92,10 +86,10 @@ public class HudPanel extends JPanel {
     }
 
     private void drawBlessing(Graphics g, int width, int height, int numBlessings, int i, StatusEffect blessing) {
-        Image image = playerStatuses.contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
-        int size = image.getHeight(null);
+        Image image = player.getEffects().contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
+        int size = height/2;
         int left = (int)(width/2 - (numBlessings+0.0)/2 * size);
 
-        g.drawImage(image, i * size + left, height-size-MARGIN, null);
+        g.drawImage(image, i * size + left, (height-size)/2, size, size, null);
     }
 }

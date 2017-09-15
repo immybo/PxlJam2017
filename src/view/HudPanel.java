@@ -92,7 +92,6 @@ public class HudPanel extends JPanel {
         Image image = playerStatuses.contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
         int size = height/2;
         int left = (int)(width/2 - (numBlessings+0.0)/2 * size);
-        int xPos = left;
 
         g.drawImage(image, i * size + left, (height-size-2*MARGIN)/2, null);
     }

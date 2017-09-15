@@ -4,6 +4,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends AbstractEntity implements Character {
 	private static final int JUMP_FORCE = 10;
@@ -11,8 +13,27 @@ public class Player extends AbstractEntity implements Character {
 
 	private static final int MAX_HORIZONTAL_SPEED = 10;
 
+	private List<StatusEffect> effects;
+
 	public Player(Point2D position, Shape collisionBox, int depth) {
 		super(position, collisionBox, depth, 10);
+		effects = new ArrayList<StatusEffect>();
+	}
+
+	public void addStatusEffect(StatusEffect effect) {
+		if (!effects.contains(effect)) {
+			effects.add(effect);
+		}
+	}
+
+	public void removeStatusEffect(StatusEffect effect) {
+		if (effects.contains(effect)) {
+			effects.remove(effect);
+		}
+	}
+
+	public List<StatusEffect> getEffects() {
+		return effects;
 	}
 
 	public void moveLeft() {

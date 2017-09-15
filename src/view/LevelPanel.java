@@ -23,14 +23,14 @@ public class LevelPanel extends JPanel {
         g.setColor(this.backgroundColor);
         g.fillRect(0, 0, width, height);
 
-        for (Entity e : this.level.getEntities()) {
-            e.render(g);
-        }
-
         // Translate to get the effect of moving
         Point2D playerPosition = level.getPlayer().getPosition();
         int playerTranslateX = (int)(width/2 - playerPosition.getX());
         int playerTranslateY = (int)(height/2 - playerPosition.getY());
         g.translate(playerTranslateX, playerTranslateY);
+
+        for (Entity e : this.level.getEntities()) {
+            e.render(g);
+        }
     }
 }

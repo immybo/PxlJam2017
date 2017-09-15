@@ -29,4 +29,9 @@ public class Wall extends AbstractEntity implements Block {
 		return bounciness;
 	}
 	
+	@Override
+	public double getMass() {
+		return 0;
+	}
+	
 }

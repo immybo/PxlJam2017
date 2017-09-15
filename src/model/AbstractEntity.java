@@ -9,10 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 public class AbstractEntity implements Entity {
 	private final static double GRAVITY = 9.81;
-
-	private Point2D position;
-	private Shape collisionBox;
-	private Shape collisionBoxOriginal;
+	private AABB aabb;
 	private int depth;
 
 	private double forceX;
@@ -23,9 +20,8 @@ public class AbstractEntity implements Entity {
 
 	private double mass;
 
-	public AbstractEntity(Point2D position, Shape collisionBoxOriginal, int depth, double mass) {
-		this.collisionBoxOriginal = collisionBoxOriginal;
-		this.setPosition(position.getX(), position.getY());
+	public AbstractEntity(AABB aabb, int depth, double mass) {
+		this.aabb = aabb;
 		this.depth = depth;
 		this.speedX = 0;
 		this.speedY = 0;
@@ -52,59 +48,38 @@ public class AbstractEntity implements Entity {
 	}
 
 	@Override
-	public Point2D getPosition() {
-		return this.position;
+	public AABB getAABB() {
+		return this.aabb;
 	}
 
 	@Override
-	public Shape getCollisionBox() {
-		return this.collisionBox;
+	public void render(Graphics g) {
+		getAABB().draw(g);
+		g.drawString(this.getClass().getSimpleName(), (int) getAABB().min().x, (int) getAABB().min().y);
 	}
 
 	@Override
-	public void render(Graphics graphics) {
-		Rectangle2D bounds = collisionBox.getBounds2D();
-		graphics.setColor(Color.YELLOW);
-		graphics.drawRect((int) bounds.getMinX(), (int) bounds.getMinY(), (int) bounds.getMaxX(),
-				(int) bounds.getMaxY());
-		graphics.drawString(this.getClass().getSimpleName(), (int) bounds.getMinX(), (int) bounds.getMinY());
+	public void setPosition(Vector v) {
+		this.getAABB().center = v;
 	}
 
 	@Override
-	public void setPosition(double x, double y) {
-		this.position = new Point2D.Double(x, y);
-		this.collisionBox = createTranslatedShape(this.collisionBoxOriginal, x, y);
-	}
-	
-	private static Shape createTranslatedShape(Shape shape, double transX, double transY) {
-		AffineTransform transform = AffineTransform.getTranslateInstance(transX, transY);
-		return transform.createTransformedShape(shape);
-	}
-
-	@Override
-	public void applyForce(double x, double y) {
-		forceX += x;
-		forceY += y;
+	public void applyForce(Vector v) {
+		if(mass > 0) {
+			getAABB().acceleration = getAABB().acceleration.add(v.mult(1/mass));
+		}
 	}
 	
 	@Override
-	public void setVelocity(double x, double y) {
-		speedX = x;
-		speedY = y;
+	public void setVelocity(Vector v) {
+		getAABB().velocity = v;
 	}
 
 	@Override
 	public void tick(double dt) {
-		//forceY += dt * GRAVITY * mass;
-
-		// Apply the forces to change the velocity of this entity
-		speedX += forceX / mass;
-		speedY += forceY / mass;
-
-		this.setPosition(this.getPosition().getX()+speedX, this.getPosition().getY()+speedY);
-
-		forceX = 0;
-		forceY = 0;
+		getAABB().velocity = getAABB().velocity.add(getAABB().acceleration);
+		getAABB().center = getAABB().center.add(getAABB().velocity);
+		getAABB().acceleration = Vector.zero();
 	}
 
 	@Override

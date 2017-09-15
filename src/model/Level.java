@@ -24,18 +24,6 @@ public class Level {
 				this.player = (Player)e;
 				break;
 			}
-			for(Entity o : entities) {
-				if(e == o) {
-					continue;
-				}
-				Area ebb = new Area(e.getCollisionBox());
-				Area obb = new Area(o.getCollisionBox());
-				ebb.intersect(obb);
-				if(!ebb.isEmpty()) {
-					e.setVelocity(0, 0);
-					o.setVelocity(0, 0);
-				}
-			}
 		}
 		this.entities = entities;
 	}
@@ -43,6 +31,22 @@ public class Level {
 	public void tick(float dt) {
 		for (Entity e : entities) {
 			e.tick(dt);
+			Entity f = null;
+			double d = Double.POSITIVE_INFINITY;
+			for(Entity o : entities) {
+				if(e == o) {
+					continue;
+				}
+				double intF = AABB.getIntersectionFraction(e.getAABB(), o.getAABB(), dt);
+				System.out.println(intF);
+				if(intF < d) {
+					f = o;
+					d = intF;
+				}
+			}
+			if(f != null) {
+				AABB.doMove(e.getAABB(), f.getAABB(), dt);
+			}
 		}
 	}
 	public void restart() {

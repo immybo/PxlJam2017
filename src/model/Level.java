@@ -1,5 +1,11 @@
 package model;
 
-public interface Level {
+import java.util.List;
 
+public interface Level {
+	public void tick(float dt);
+	public void restart();
+	
+	public List<Entity> getEntities();
+	
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public class Wall extends AbstractEntity implements Block {
 	private double bounciness;
@@ -17,7 +18,10 @@ public class Wall extends AbstractEntity implements Block {
 	
 	@Override
 	public void render(Graphics g) {
-		
+		Rectangle2D cb = this.getCollisionBox().getBounds2D();
+		//TODO tiling
+		g.drawImage(texture, (int) cb.getMinX(), (int) cb.getMinY(), 
+				(int) cb.getWidth(), (int) cb.getHeight(), null);
 	}
 	
 	@Override

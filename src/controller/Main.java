@@ -1,7 +1,10 @@
 package controller;
 
+import view.GameFrame;
+import view.GamePanel;
+
 public class Main {
 	public static void main(String[] args) {
-		throw new Error("There was an error displaying this error"); //FIXME TEAM
+		new GameFrame(null, null);
 	}
 }

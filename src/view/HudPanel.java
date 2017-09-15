@@ -39,6 +39,18 @@ public class HudPanel extends JPanel {
         try {
             statusImageOn.put(StatusEffect.POISONED, ImageIO.read(new File("resources/statusPoisonedOn.png")));
             statusImageOff.put(StatusEffect.POISONED, ImageIO.read(new File("resources/statusPoisonedOff.png")));
+            statusImageOn.put(StatusEffect.BROKEN_LEG, ImageIO.read(new File("resources/statusBrokenLegOn.png")));
+            statusImageOff.put(StatusEffect.BROKEN_LEG, ImageIO.read(new File("resources/statusBrokenLegOff.png")));
+            statusImageOn.put(StatusEffect.BUBBLE, ImageIO.read(new File("resources/statusBubbleOn.png")));
+            statusImageOff.put(StatusEffect.BUBBLE, ImageIO.read(new File("resources/statusBubbleOff.png")));
+            statusImageOn.put(StatusEffect.FLATTENED, ImageIO.read(new File("resources/statusFlattenedOn.png")));
+            statusImageOff.put(StatusEffect.FLATTENED, ImageIO.read(new File("resources/statusFlattenedOff.png")));
+            statusImageOn.put(StatusEffect.FROZEN, ImageIO.read(new File("resources/statusFrozenOn.png")));
+            statusImageOff.put(StatusEffect.FROZEN, ImageIO.read(new File("resources/statusFrozenOff.png")));
+            statusImageOn.put(StatusEffect.ON_FIRE, ImageIO.read(new File("resources/statusOnFireOn.png")));
+            statusImageOff.put(StatusEffect.ON_FIRE, ImageIO.read(new File("resources/statusOnFireOff.png")));
+            statusImageOn.put(StatusEffect.SPIKY, ImageIO.read(new File("resources/statusSpikyOn.png")));
+            statusImageOff.put(StatusEffect.SPIKY, ImageIO.read(new File("resources/statusSpikyOff.png")));
         } catch (IOException e) {
             throw new Error("Unable to load status image " + e);
         }
@@ -69,8 +81,14 @@ public class HudPanel extends JPanel {
         g.drawOval(MARGIN, MARGIN, healthPoolSize, healthPoolSize);
 
         // Icons for current blessings
-        int numBlessings = 1;
+        int numBlessings = 7;
         drawBlessing(g, width, height, numBlessings, 0, StatusEffect.POISONED);
+        drawBlessing(g, width, height, numBlessings, 1, StatusEffect.BROKEN_LEG);
+        drawBlessing(g, width, height, numBlessings, 2, StatusEffect.ON_FIRE);
+        drawBlessing(g, width, height, numBlessings, 3, StatusEffect.SPIKY);
+        drawBlessing(g, width, height, numBlessings, 4, StatusEffect.FROZEN);
+        drawBlessing(g, width, height, numBlessings, 5, StatusEffect.BUBBLE);
+        drawBlessing(g, width, height, numBlessings, 6, StatusEffect.FLATTENED);
 
         // What is this, Diablo?
         g.setColor(manaPoolColor);

@@ -33,6 +33,12 @@ public class AbstractEntity implements Entity {
 	}
 
 	@Override
+	public double getXSpeed() { return this.speedX; }
+
+	@Override
+	public double getYSpeed() { return this.speedY; }
+
+	@Override
 	public double getMass() { return this.mass; }
 
 	@Override

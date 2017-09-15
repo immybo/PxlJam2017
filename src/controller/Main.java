@@ -3,6 +3,7 @@ package controller;
 import model.Entity;
 import model.Level;
 import model.Player;
+import view.GameEventListener;
 import view.GameFrame;
 import view.GamePanel;
 
@@ -26,8 +27,7 @@ public class Main {
 		    public void run() {
 		    	//Level level = new Level(entities);
 				Level level = Level.buildLevel(new File("resources/levels/testLevel"));
-		    	GameFrame gf = new GameFrame(level, null);
-				
+				GameFrame gf = new GameFrame(level, new GameEventListener(level));
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {

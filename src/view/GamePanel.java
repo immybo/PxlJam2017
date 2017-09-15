@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
 
         this.setLayout(new BorderLayout());
 
-        this.hudPanel = new HudPanel();
+        this.hudPanel = new HudPanel(level.getPlayer());
         hudPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT*HUD_HEIGHT)));
         this.add(hudPanel, BorderLayout.SOUTH);
 

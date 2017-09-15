@@ -1,4 +1,13 @@
 package view;
 
-public interface GameEventListener {
+public class GameEventListener {
+	public void onLeftPressed() {
+		
+	}
+	public void onRightPressed() {
+		
+	}
+	public void onJumpPressed() {
+		
+	}
 }

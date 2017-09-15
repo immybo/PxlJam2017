@@ -6,7 +6,7 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public class Wall extends AbstractEntity implements Block {
+public class Wall extends Block {
 	private double bounciness;
 	private Image texture;
 

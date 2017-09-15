@@ -26,8 +26,8 @@ public class GameFrame extends JFrame {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                System.out.println(e.getKeyChar());
-                switch (e.getKeyChar()) {
+
+                switch (Character.toLowerCase(e.getKeyChar())) {
                     case MOVE_RIGHT_KEY:
                         listener.onRightPressed();
                         break;
@@ -47,7 +47,14 @@ public class GameFrame extends JFrame {
 
             @Override
             public void keyReleased(KeyEvent e) {
-
+                switch (Character.toLowerCase(e.getKeyChar())) {
+                    case MOVE_RIGHT_KEY:
+                        listener.onRightReleased();
+                        break;
+                    case MOVE_LEFT_KEY:
+                        listener.onLeftReleased();
+                        break;
+                }
             }
         });
     }

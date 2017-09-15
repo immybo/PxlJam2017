@@ -18,4 +18,6 @@ public class GameEventListener {
 	public void onJumpPressed() {
 		level.getPlayer().jump();
 	}
+	public void onLeftReleased() { level.getPlayer().stopLeftMovement();}
+	public void onRightReleased() { level.getPlayer().stopRightMovement();}
 }

@@ -4,6 +4,7 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class LevelPanel extends JPanel {
     private static final Color backgroundColor = Color.BLUE;
@@ -25,5 +26,11 @@ public class LevelPanel extends JPanel {
         for (Entity e : this.level.getEntities()) {
             e.render(g);
         }
+
+        // Translate to get the effect of moving
+        Point2D playerPosition = level.getPlayer().getPosition();
+        int playerTranslateX = (int)(width/2 - playerPosition.getX());
+        int playerTranslateY = (int)(height/2 - playerPosition.getY());
+        g.translate(playerTranslateX, playerTranslateY);
     }
 }

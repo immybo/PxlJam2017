@@ -18,7 +18,6 @@ public class HudPanel extends JPanel {
     private final static int MARGIN = 20;
 
     private Player player;
-    private List<StatusEffect> playerStatuses;
 
     private Map<StatusEffect, Image> statusImageOn;
     private Map<StatusEffect, Image> statusImageOff;
@@ -29,8 +28,6 @@ public class HudPanel extends JPanel {
 
     public HudPanel(Player player){
         this.player = player;
-        this.playerStatuses = new ArrayList<StatusEffect>();
-        playerStatuses.add(StatusEffect.POISONED);
         statusImageOn = new HashMap<>();
         statusImageOff = new HashMap<>();
         loadStatusImages();
@@ -89,7 +86,7 @@ public class HudPanel extends JPanel {
     }
 
     private void drawBlessing(Graphics g, int width, int height, int numBlessings, int i, StatusEffect blessing) {
-        Image image = playerStatuses.contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
+        Image image = player.getEffects().contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
         int size = height/2;
         int left = (int)(width/2 - (numBlessings+0.0)/2 * size);
 

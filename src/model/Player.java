@@ -62,7 +62,7 @@ public class Player extends AbstractEntity implements Character {
 	public void jump() {
 		// This is just if they're moving down;
 		// TODO FIXME
-		if (Math.abs(this.getYSpeed()) >= 0) {
+		if (Math.abs(this.getYSpeed()) == 0) {
 			this.applyForce(0, -JUMP_FORCE);
 		}
 	}

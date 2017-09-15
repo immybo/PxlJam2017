@@ -35,12 +35,12 @@ public class Player extends AbstractEntity implements Character {
 
 	@Override
 	public int getHealth() {
-		return 0;
+		return 50;
 	}
 
 	@Override
 	public int getMaxHealth() {
-		return 0;
+		return 100;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package view;
 
+import model.Player;
 import model.StatusEffect;
 import sun.plugin.dom.exception.InvalidStateException;
 
@@ -16,8 +17,7 @@ import java.util.Map;
 public class HudPanel extends JPanel {
     private final static int MARGIN = 20;
 
-    private double playerHealth;
-    private double playerMana;
+    private Player player;
     private List<StatusEffect> playerStatuses;
 
     private Map<StatusEffect, Image> statusImageOn;
@@ -27,9 +27,8 @@ public class HudPanel extends JPanel {
     private Color manaPoolColor;
     private Color hudBackgroundColor;
 
-    public HudPanel(){
-        this.playerHealth = 0.7;
-        this.playerMana = 0.7;
+    public HudPanel(Player player){
+        this.player = player;
         this.playerStatuses = new ArrayList<StatusEffect>();
         playerStatuses.add(StatusEffect.POISONED);
         statusImageOn = new HashMap<>();
@@ -49,13 +48,11 @@ public class HudPanel extends JPanel {
         }
     }
 
-    public void setPlayerHealth(int currentHealth, int maxHealth) {
-        if (maxHealth == 0) this.playerHealth = 1.0;
-        else this.playerHealth = (currentHealth+0.0)/maxHealth;
-    }
-
     @Override
     public void paint(Graphics g) {
+        double playerHealth = (player.getHealth()+0.0) / player.getMaxHealth();
+        double playerMana = 0.5;
+
         int width = this.getWidth();
         int height = this.getHeight();
 

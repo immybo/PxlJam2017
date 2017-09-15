@@ -5,7 +5,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class Player implements Character{
+public class Player extends AbstractEntity implements Character {
+	public Player(Point2D position, Shape collisionBox, int depth) {
+		super(position, collisionBox, depth);
+	}
+
 	public void moveLeft() {
 		throw new NotImplementedException();
 	}
@@ -32,27 +36,8 @@ public class Player implements Character{
 	}
 
 	@Override
-	public int getDepth() {
-		return 0;
-	}
-
-	@Override
-	public Point2D getPosition() {
-		return new Point2D.Double(50, 50);
-	}
-
-	@Override
-	public Shape getCollisionBox() {
-		return null;
-	}
-
-	@Override
-	public void render(Graphics graphics) {
-
-	}
-
-	@Override
-	public void setPosition(double x, double y) {
-
+	public void render(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.fillRect((int)this.getPosition().getX(), (int)this.getPosition().getY(), 50, 50);
 	}
 }

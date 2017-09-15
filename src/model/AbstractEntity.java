@@ -13,8 +13,8 @@ public class AbstractEntity implements Entity {
 	private Shape collisionBoxOriginal;
 	private int depth;
 
-	public AbstractEntity(Point2D position, Shape collisionBox, int depth) {
-		this.collisionBox = collisionBoxOriginal;
+	public AbstractEntity(Point2D position, Shape collisionBoxOriginal, int depth) {
+		this.collisionBoxOriginal = collisionBoxOriginal;
 		this.setPosition(position.getX(), position.getY());
 		this.depth = depth;
 	}

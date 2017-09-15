@@ -1,5 +1,6 @@
 package controller;
 
+import model.Level;
 import view.GameFrame;
 import view.GamePanel;
 

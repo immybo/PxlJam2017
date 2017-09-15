@@ -12,29 +12,13 @@ public class AbstractEntity implements Entity {
 	private AABB aabb;
 	private int depth;
 
-	private double forceX;
-	private double forceY;
-
-	private double speedX;
-	private double speedY;
-
 	private double mass;
 
 	public AbstractEntity(AABB aabb, int depth, double mass) {
 		this.aabb = aabb;
 		this.depth = depth;
-		this.speedX = 0;
-		this.speedY = 0;
-		this.forceX = 0;
-		this.forceY = 0;
 		this.mass = mass;
 	}
-
-	@Override
-	public double getXSpeed() { return this.speedX; }
-
-	@Override
-	public double getYSpeed() { return this.speedY; }
 
 	@Override
 	public double getMass() { return this.mass; }
@@ -85,5 +69,10 @@ public class AbstractEntity implements Entity {
 	@Override
 	public boolean isSolid() {
 		return true;
+	}
+
+	@Override
+	public Vector getVelocity() {
+		return getAABB().velocity;
 	}
 }

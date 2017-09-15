@@ -69,8 +69,8 @@ public class Level {
 			while (reader.hasNext()) {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
-					Point2D spawn = new Point2D.Double(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(spawn, new Rectangle(0, 0, 50, 50), 0);
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					Player player = new Player(new AABB(spawn, new Vector(25,25), null, null), 0);
 					entities.add((player));
 					reader.nextLine();
 				}
@@ -90,12 +90,12 @@ public class Level {
 						int width = Math.max(x1, x2) - x;
 						int height = Math.max(y1, y2) - y;
 
-						Point2D point = new Point2D.Double((double) x, (double) y);
-						Shape hitbox = new Rectangle(0,0,width,height);
+						Vector point = new Vector((double) x, (double) y);
+						Vector extents = new Vector(width/2,height/2);
 						BufferedImage texture = ImageIO.read(new File("resources/dirt.png"));
 						double bounciness = 1.0;
 						int depth = 0;
-						Wall wall = new Wall(point, hitbox, texture, bounciness, depth);
+						Wall wall = new Wall(new AABB(point, extents, null, null), texture, bounciness, depth);
 						entities.add(wall);
 					}
 				}

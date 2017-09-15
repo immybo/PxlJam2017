@@ -21,8 +21,8 @@ public class Player extends AbstractEntity implements Character {
 
 	private List<StatusEffect> effects;
 
-	public Player(Point2D position, Shape collisionBox, int depth) {
-		super(position, collisionBox, depth, 10);
+	public Player(AABB aabb, int depth) {
+		super(aabb, depth, 10);
 		effects = new ArrayList<StatusEffect>();
 		this.movement = Movement.STATIONARY;
 	}
@@ -60,8 +60,8 @@ public class Player extends AbstractEntity implements Character {
 	public void jump() {
 		// This is just if they're moving down;
 		// TODO FIXME
-		if (Math.abs(this.getYSpeed()) >= 0) {
-			this.applyForce(0, -JUMP_FORCE);
+		if (getVelocity().y >= 0) {
+			this.applyForce(new Vector(0, -JUMP_FORCE));
 		}
 	}
 
@@ -77,20 +77,19 @@ public class Player extends AbstractEntity implements Character {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.GREEN);
-		g.fillRect((int)this.getPosition().getX(), (int)this.getPosition().getY(), 50, 50);
+		super.render(g);
 	}
 
 	@Override
 	public void tick(double dt){
-		double xSpeed = this.getXSpeed();
+		double xSpeed = this.getVelocity().x;
 		if(this.movement == Movement.MOVE_RIGHT)
 			xSpeed = this.MOVEMENT_SPEED * dt;
 		if(this.movement == Movement.MOVE_LEFT)
 			xSpeed = -this.MOVEMENT_SPEED * dt;
 		if(this.movement == Movement.STATIONARY)
 			xSpeed = 0;
-		this.setXSpeed(xSpeed);
+		this.applyForce(new Vector(xSpeed, 0));
 		super.tick(dt);
 	}
 }

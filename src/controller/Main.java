@@ -20,9 +20,6 @@ import javax.swing.Timer;
 
 public class Main {
 	public static void main(String[] args) {
-		List<Entity> entities = new ArrayList<Entity>();
-		entities.add(new Player(new Point2D.Double(50, 50), new Rectangle(0, 0, 50, 50), 0));
-		
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		    	//Level level = new Level(entities);

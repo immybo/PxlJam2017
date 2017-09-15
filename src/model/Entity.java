@@ -13,8 +13,7 @@ public interface Entity {
 	public void tick(double dt);
 	public double getMass();
 	public void setMass(double mass);
-	public double getXSpeed();
-	public double getYSpeed();
 	public void setVelocity(Vector v);
+	public Vector getVelocity();
 	public boolean isSolid();
 }

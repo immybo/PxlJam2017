@@ -30,6 +30,7 @@ public class Level {
 
 	public void tick(float dt) {
 		for (Entity e : entities) {
+			e.applyForce(new Vector(0, 1));
 			e.tick(dt);
 			Entity f = null;
 			double d = Double.POSITIVE_INFINITY;

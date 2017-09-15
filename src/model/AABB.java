@@ -9,10 +9,6 @@ public class AABB {
 	public Vector velocity;
 	public Vector acceleration;
 	
-	public AABB(double x, double y, double width, double height) {
-		this(new Vector(x + width/2, y + height/2), new Vector(width/2, height/2), null, null);
-	}
-	
 	public AABB(Vector center, Vector extents, Vector velocity, Vector acceleration) {
 		this.center = center;
 		this.extents = extents;

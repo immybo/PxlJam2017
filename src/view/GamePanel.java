@@ -6,6 +6,10 @@ import model.Level;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 800;
+    private static final double HUD_HEIGHT = 0.2;
+
     private final Level level;
     private final GameEventListener listener;
     private final JPanel hudPanel;
@@ -17,14 +21,15 @@ public class GamePanel extends JPanel {
         this.listener = listener;
 
         this.hudPanel = new HudPanel();
+        hudPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT*HUD_HEIGHT)));
+        this.add(hudPanel);
 
-        this.setPreferredSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.repaint();
     }
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        super.paint(g);
     }
 }

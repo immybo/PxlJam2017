@@ -100,4 +100,14 @@ public class AbstractEntity implements Entity {
 		forceX = 0;
 		forceY = 0;
 	}
+
+	@Override
+	public void setXSpeed(double x){
+		this.speedX = x;
+	}
+
+	@Override
+	public void setYSpeed(double y){
+		this.speedY = y;
+	}
 }

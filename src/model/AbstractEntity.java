@@ -8,6 +8,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class AbstractEntity implements Entity {
+	private final static double GRAVITY = 9.81;
+
 	private Point2D position;
 	private Shape collisionBox;
 	private Shape collisionBoxOriginal;
@@ -87,6 +89,8 @@ public class AbstractEntity implements Entity {
 
 	@Override
 	public void tick(double dt) {
+		//forceY += dt * GRAVITY * mass;
+
 		// Apply the forces to change the velocity of this entity
 		speedX += forceX / mass;
 		speedY += forceY / mass;

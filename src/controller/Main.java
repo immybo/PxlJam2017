@@ -3,6 +3,7 @@ package controller;
 import model.Entity;
 import model.Level;
 import model.Player;
+import view.GameEventListener;
 import view.GameFrame;
 import view.GamePanel;
 
@@ -24,7 +25,7 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 		    	Level level = new Level(entities);
-		    	GameFrame gf = new GameFrame(level, null);
+		    	GameFrame gf = new GameFrame(level, new GameEventListener(level));
 				
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {

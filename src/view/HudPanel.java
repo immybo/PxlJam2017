@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.awt.*;
 import java.util.Map;
@@ -31,6 +32,8 @@ public class HudPanel extends JPanel {
         this.playerMana = 0.7;
         this.playerStatuses = new ArrayList<StatusEffect>();
         playerStatuses.add(StatusEffect.POISONED);
+        statusImageOn = new HashMap<>();
+        statusImageOff = new HashMap<>();
         loadStatusImages();
         this.healthPoolColor = Color.RED;
         this.manaPoolColor = Color.BLUE;
@@ -90,9 +93,9 @@ public class HudPanel extends JPanel {
 
     private void drawBlessing(Graphics g, int width, int height, int numBlessings, int i, StatusEffect blessing) {
         Image image = playerStatuses.contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
-        int size = height/2;
+        int size = image.getHeight(null);
         int left = (int)(width/2 - (numBlessings+0.0)/2 * size);
 
-        g.drawImage(image, i * size + left, (height-size-2*MARGIN)/2, null);
+        g.drawImage(image, i * size + left, height-size-MARGIN, null);
     }
 }

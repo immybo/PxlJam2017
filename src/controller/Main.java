@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class Main {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
-		    	Level level = new Level(entities);
-		    	GameFrame gf = new GameFrame(level, new GameEventListener(level));
-				
+		    	//Level level = new Level(entities);
+				Level level = Level.buildLevel(new File("resources/levels/testLevel"));
+				GameFrame gf = new GameFrame(level, new GameEventListener(level));
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {

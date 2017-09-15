@@ -1,8 +1,12 @@
 package view;
 
 import model.StatusEffect;
+import sun.plugin.dom.exception.InvalidStateException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
@@ -30,6 +34,15 @@ public class HudPanel extends JPanel {
         this.healthPoolColor = Color.RED;
         this.manaPoolColor = Color.BLUE;
         this.hudBackgroundColor = Color.GRAY;
+    }
+
+    private void loadStatusImages() {
+        try {
+            statusImageOn.put(StatusEffect.POISONED, ImageIO.read(new File("resources/statusPoisonedOn.png")));
+            statusImageOff.put(StatusEffect.POISONED, ImageIO.read(new File("resources/statusPoisonedOff.png")));
+        } catch (IOException e) {
+            throw new InvalidStateException("Unable to load status image " + e);
+        }
     }
 
     public void setPlayerHealth(int currentHealth, int maxHealth) {

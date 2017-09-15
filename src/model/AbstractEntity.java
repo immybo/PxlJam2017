@@ -89,7 +89,7 @@ public class AbstractEntity implements Entity {
 
 	@Override
 	public void tick(double dt) {
-		//forceY += dt * GRAVITY * mass;
+		forceY += dt * GRAVITY * mass;
 
 		// Apply the forces to change the velocity of this entity
 		speedX += forceX / mass;

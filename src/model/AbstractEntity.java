@@ -13,11 +13,30 @@ public class AbstractEntity implements Entity {
 	private Shape collisionBoxOriginal;
 	private int depth;
 
-	public AbstractEntity(Point2D position, Shape collisionBoxOriginal, int depth) {
+	private double forceX;
+	private double forceY;
+
+	private double speedX;
+	private double speedY;
+
+	private double mass;
+
+	public AbstractEntity(Point2D position, Shape collisionBoxOriginal, int depth, double mass) {
 		this.collisionBoxOriginal = collisionBoxOriginal;
 		this.setPosition(position.getX(), position.getY());
 		this.depth = depth;
+		this.speedX = 0;
+		this.speedY = 0;
+		this.forceX = 0;
+		this.forceY = 0;
+		this.mass = mass;
 	}
+
+	@Override
+	public double getMass() { return this.mass; }
+
+	@Override
+	public void setMass(double mass) { this.mass = mass; }
 
 	@Override
 	public int getDepth() {
@@ -54,4 +73,21 @@ public class AbstractEntity implements Entity {
 		return transform.createTransformedShape(shape);
 	}
 
+	@Override
+	public void applyForce(double x, double y) {
+		forceX += x;
+		forceY += y;
+	}
+
+	@Override
+	public void tick(double dt) {
+		// Apply the forces to change the velocity of this entity
+		speedX += forceX / mass;
+		speedY += forceY / mass;
+
+		this.setPosition(this.getPosition().getX()+speedX, this.getPosition().getY()+speedY);
+
+		forceX = 0;
+		forceY = 0;
+	}
 }

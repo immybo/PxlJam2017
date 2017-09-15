@@ -6,18 +6,25 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class Player extends AbstractEntity implements Character {
+	private static final int JUMP_FORCE = 500;
+	private static final int MOVE_FORCE = 100;
+
 	public Player(Point2D position, Shape collisionBox, int depth) {
-		super(position, collisionBox, depth);
+		super(position, collisionBox, depth, 10);
 	}
 
 	public void moveLeft() {
-		throw new NotImplementedException();
+		this.applyForce(-MOVE_FORCE, 0);
 	}
 	public void moveRight() {
-		throw new NotImplementedException();
+		this.applyForce(MOVE_FORCE, 0);
 	}
 	public void jump() {
-		throw new NotImplementedException();
+		// This is just if they're moving down;
+		// TODO FIXME
+		if (Math.abs(this.getYSpeed()) >= 0) {
+			this.applyForce(0, -JUMP_FORCE);
+		}
 	}
 
 	@Override
@@ -27,11 +34,6 @@ public class Player extends AbstractEntity implements Character {
 
 	@Override
 	public int getMaxHealth() {
-		return 0;
-	}
-
-	@Override
-	public int applyForce(double x, double y) {
 		return 0;
 	}
 

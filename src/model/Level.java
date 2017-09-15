@@ -30,7 +30,9 @@ public class Level {
 	}
 
 	public void tick(float dt) {
-		throw new NotImplementedException();
+		for (Entity e : entities) {
+			e.tick(dt);
+		}
 	}
 	public void restart() {
 		throw new NotImplementedException();

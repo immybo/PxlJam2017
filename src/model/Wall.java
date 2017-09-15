@@ -11,7 +11,7 @@ public class Wall extends AbstractEntity implements Block {
 	private Image texture;
 
 	public Wall(Point2D position, Shape collisionBox, Image texture, double bounciness, int depth) {
-		super(position, collisionBox, depth);
+		super(position, collisionBox, depth, 100);
 		this.bounciness = bounciness;
 		this.texture = texture;
 	}

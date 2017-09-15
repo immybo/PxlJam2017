@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 
 public class Player extends AbstractEntity implements Character {
 	public Player(Point2D position, Shape collisionBox, int depth) {
-		super(position, collisionBox, depth);
+		super(position, collisionBox, depth, 10);
 	}
 
 	public void moveLeft() {
@@ -27,11 +27,6 @@ public class Player extends AbstractEntity implements Character {
 
 	@Override
 	public int getMaxHealth() {
-		return 0;
-	}
-
-	@Override
-	public int applyForce(double x, double y) {
 		return 0;
 	}
 

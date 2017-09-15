@@ -5,8 +5,8 @@ import java.awt.geom.Point2D;
 
 public abstract class Block extends AbstractEntity {
 
-	public Block(Point2D position, Shape collisionBoxOriginal, int depth, double mass){
-		super(position, collisionBoxOriginal, depth, mass);
+	public Block(AABB aabb, int depth, double mass){
+		super(aabb, depth, mass);
 	}
 
 	public abstract double getBounciness();

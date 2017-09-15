@@ -24,14 +24,13 @@ public class LevelPanel extends JPanel {
         g.fillRect(0, 0, width, height);
 
         // Translate to get the effect of moving
-        Point2D playerPosition = level.getPlayer().getPosition();
-        int playerTranslateX = (int)(width/4 - playerPosition.getX() - level.getPlayer().getCollisionBox().getBounds2D().getWidth()/2);
-        int playerTranslateY = (int)(height/2 - playerPosition.getY() - level.getPlayer().getCollisionBox().getBounds2D().getHeight()/2);
+        Vector playerPosition = level.getPlayer().getAABB().center;
+        int playerTranslateX = (int)(width/2 - playerPosition.x);
+        int playerTranslateY = (int)(height/2 - playerPosition.y);
         g.translate(playerTranslateX, playerTranslateY);
 
         for (Entity e : this.level.getEntities()) {
             e.render(g);
         }
-
     }
 }

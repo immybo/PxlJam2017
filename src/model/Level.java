@@ -1,20 +1,18 @@
 package model;
 
-import org.omg.PortableInterceptor.INACTIVE;
-import sun.management.counter.perf.PerfLongArrayCounter;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
+
+import javax.imageio.ImageIO;
 
 public class Level {
 	private Player player;
@@ -33,10 +31,26 @@ public class Level {
 	public void tick(float dt) {
 		for (Entity e : entities) {
 			e.tick(dt);
+			Entity f = null;
+			double d = Double.POSITIVE_INFINITY;
+			for(Entity o : entities) {
+				if(e == o) {
+					continue;
+				}
+				double intF = AABB.getIntersectionFraction(e.getAABB(), o.getAABB(), dt);
+				System.out.println(intF);
+				if(intF < d) {
+					f = o;
+					d = intF;
+				}
+			}
+			if(f != null) {
+				AABB.doMove(e.getAABB(), f.getAABB(), dt);
+			}
 		}
 	}
 	public void restart() {
-		throw new NotImplementedException();
+		throw new Error("not implemented");
 	}
 	
 	public List<Entity> getEntities() {
@@ -55,8 +69,8 @@ public class Level {
 			while (reader.hasNext()) {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
-					Point2D spawn = new Point2D.Double(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(spawn, new Rectangle(0, 0, 50, 50), 0);
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					Player player = new Player(new AABB(spawn, new Vector(25,25), null, null), 0);
 					entities.add((player));
 					reader.nextLine();
 				}
@@ -76,12 +90,12 @@ public class Level {
 						int width = Math.max(x1, x2) - x;
 						int height = Math.max(y1, y2) - y;
 
-						Point2D point = new Point2D.Double((double) x, (double) y);
-						Shape hitbox = new Rectangle(0,0,width,height);
+						Vector point = new Vector((double) x, (double) y);
+						Vector extents = new Vector(width/2,height/2);
 						BufferedImage texture = ImageIO.read(new File("resources/dirt.png"));
 						double bounciness = 1.0;
 						int depth = 0;
-						Wall wall = new Wall(point, hitbox, texture, bounciness, depth);
+						Wall wall = new Wall(new AABB(point, extents, null, null), texture, bounciness, depth);
 						entities.add(wall);
 					}
 				}

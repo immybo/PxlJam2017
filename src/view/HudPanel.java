@@ -2,7 +2,6 @@ package view;
 
 import model.Player;
 import model.StatusEffect;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -53,7 +52,7 @@ public class HudPanel extends JPanel {
             statusImageOn.put(StatusEffect.SPIKY, ImageIO.read(new File("resources/statusSpikyOn.png")));
             statusImageOff.put(StatusEffect.SPIKY, ImageIO.read(new File("resources/statusSpikyOff.png")));
         } catch (IOException e) {
-            throw new InvalidStateException("Unable to load status image " + e);
+            throw new Error("Unable to load status image " + e);
         }
     }
 

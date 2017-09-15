@@ -10,23 +10,27 @@ public class Wall extends Block {
 	private double bounciness;
 	private Image texture;
 
-	public Wall(Point2D position, Shape collisionBox, Image texture, double bounciness, int depth) {
-		super(position, collisionBox, depth, 100);
+	public Wall(AABB aabb, Image texture, double bounciness, int depth) {
+		super(aabb, depth, 100);
 		this.bounciness = bounciness;
 		this.texture = texture;
 	}
 	
 	@Override
 	public void render(Graphics g) {
-		Rectangle2D cb = this.getCollisionBox().getBounds2D();
-		//TODO tiling
-		g.drawImage(texture, (int) cb.getMinX(), (int) cb.getMinY(), 
-				(int) cb.getWidth(), (int) cb.getHeight(), null);
+		Vector min = getAABB().min();
+		Vector ext = getAABB().extents;
+		g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
 	}
 	
 	@Override
 	public double getBounciness() {
 		return bounciness;
+	}
+	
+	@Override
+	public double getMass() {
+		return 0;
 	}
 	
 }

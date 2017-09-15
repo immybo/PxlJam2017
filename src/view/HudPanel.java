@@ -31,6 +31,7 @@ public class HudPanel extends JPanel {
         this.playerMana = 0.7;
         this.playerStatuses = new ArrayList<StatusEffect>();
         playerStatuses.add(StatusEffect.POISONED);
+        loadStatusImages();
         this.healthPoolColor = Color.RED;
         this.manaPoolColor = Color.BLUE;
         this.hudBackgroundColor = Color.GRAY;

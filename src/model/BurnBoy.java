@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Graphics;
+
 /**
  * Created by Karametua on 16/09/2017.
  */
@@ -15,6 +17,13 @@ public class BurnBoy extends Enemy {
     public void tick(double dt) {
         shoot(dt);
         super.tick(dt);
+    }
+    
+    @Override
+    public void render(Graphics g) {
+		Vector min = getAABB().min();
+		Vector ext = getAABB().extents;
+		g.drawImage(Textures.BURN_BOY, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
     }
 
     private void shoot(double dt) {

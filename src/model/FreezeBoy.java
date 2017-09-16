@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Graphics;
+
 public class FreezeBoy extends Enemy {
 
     private double shootTimer = 0;
@@ -22,6 +24,13 @@ public class FreezeBoy extends Enemy {
     public void tick(double dt) {
         shoot(dt);
         super.tick(dt);
+    }
+    
+    @Override
+    public void render(Graphics g) {
+		Vector min = getAABB().min();
+		Vector ext = getAABB().extents;
+		g.drawImage(Textures.FREEZE_BOY, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
     }
 
     private void shoot(double dt) {

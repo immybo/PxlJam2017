@@ -25,7 +25,7 @@ public class MainLevelEdit {
 		    public void run() {
 		    	Level level = new LevelEditor(Level.buildLevel(new File("resources/levels/testLevel")));
 		    	System.out.println(level);
-				GameFrame gf = new GameFrame(level, new GameEventListener());
+				GameFrame gf = new GameFrame(new Level[]{level}, new GameEventListener());
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {

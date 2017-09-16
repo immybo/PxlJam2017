@@ -18,11 +18,13 @@ public class GameFrame extends JFrame implements ControllerListener {
 
     private GameEventListener listener;
 
-    private Level level;
+    private Level[] levels;
+    private int levelIndex;
 
-    public GameFrame(Level level, GameEventListener listener) {
+    public GameFrame(Level[] levels, GameEventListener listener) {
         super();
-        this.level = level;
+        this.levels = levels;
+        this.levelIndex = 0;
 
         this.listener = listener;
         restart();
@@ -96,22 +98,22 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public Level getLevel() {
-        return level;
+        return levels[levelIndex];
     }
 
     public void restart() {
-        Level level = this.level.restart();
-        setLevel(level);
+        Level level = this.getLevel().restart();
+        setLevel(levelIndex);
     }
 
-    public void setLevel(Level level) {
-        this.level = level;
-        level.setControllerListener(this);
-        this.listener.setLevel(level);
+    public void setLevel(int newIndex) {
+        this.levelIndex = newIndex;
+        levels[levelIndex].setControllerListener(this);
+        this.listener.setLevel(levels[levelIndex]);
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
-        this.add(new GamePanel(level, listener));
+        this.add(new GamePanel(levels[levelIndex], listener));
         this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -121,5 +123,19 @@ public class GameFrame extends JFrame implements ControllerListener {
     public void onPlayerDeath() {
         JOptionPane.showMessageDialog(this, "YOU DED BOI");
         restart();
+    }
+
+    @Override
+    public void onLevelFinish() {
+        levelIndex++;
+
+        if (levelIndex == levels.length) {
+            JOptionPane.showMessageDialog(this, "You've finished all the levels. Click OK to start again.");
+            levelIndex = 0;
+            restart();
+            return;
+        }
+
+        setLevel(levelIndex);
     }
 }

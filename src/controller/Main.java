@@ -26,8 +26,11 @@ public class Main {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
-		    	Level level = Level.buildLevel(new File("resources/levels/testLevel"));
-				GameFrame gf = new GameFrame(level, new GameEventListener());
+				Level[] levels = new Level[LEVELS.length];
+				for (int i = 0; i < LEVELS.length; i++) {
+					levels[i] = Level.buildLevel(new File(LEVELS[i]));
+				}
+				GameFrame gf = new GameFrame(levels, new GameEventListener());
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {

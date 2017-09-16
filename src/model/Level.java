@@ -68,6 +68,12 @@ public class Level {
 			}
 		}
 
+		// Did we finish level?
+		if (this.getPlayer().getAABB().center.x >= this.max.x - 100) {
+			controllerListener.onLevelFinish();
+			return;
+		}
+
 		for (Entity e : entitiesToAdd) {
 			entities.add(e);
 		}

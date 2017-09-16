@@ -60,5 +60,8 @@ public abstract class Character extends AbstractEntity {
 
 	public double getHealth(){ return health; }
 	public int getMaxHealth(){ return 100;}
-	public void damage(double damage){ this.health -= damage; }
+	public void damage(double damage){
+		if(!effects.contains(StatusEffect.FROZEN))
+			this.health -= damage;
+		}
 }

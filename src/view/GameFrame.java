@@ -18,14 +18,13 @@ public class GameFrame extends JFrame implements ControllerListener {
 
     private GameEventListener listener;
 
-    private String levelPath;
     private Level level;
 
-    public GameFrame(String levelPath, GameEventListener listener) {
+    public GameFrame(Level level, GameEventListener listener) {
         super();
+        this.level = level;
 
         this.listener = listener;
-        this.levelPath = levelPath;
         restart();
 
         this.addMouseListener(new MouseListener() {
@@ -101,7 +100,7 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public void restart() {
-        Level level = Level.buildLevel(new File(levelPath));
+        Level level = Level.buildLevel(this.level.levelFile);
         setLevel(level);
     }
 

@@ -83,12 +83,7 @@ public class Player extends Character {
 		Vector ext = getAABB().extents;
 		g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
 	}
-
-	public void damage(double damage){
-		if(!effects.contains(StatusEffect.FROZEN))
-			super.damage(damage);
-	}
-
+	
 	@Override
 	public void tick(double dt) {
 		double ySpeed = this.getVelocity().y;

@@ -25,6 +25,7 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.levelIndex = 0;
 
         this.listener = listener;
+        this.listener.setLevel(levels[levelIndex]);
 
         restart();
 
@@ -120,14 +121,6 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public void restart() {
-        levels[levelIndex] = levels[levelIndex].restart();
-        setLevel(levelIndex);
-    }
-
-    public void setLevel(int newIndex) {
-        this.levelIndex = newIndex;
-        levels[levelIndex].setControllerListener(this);
-        this.listener.setLevel(levels[levelIndex]);
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
@@ -135,13 +128,19 @@ public class GameFrame extends JFrame implements ControllerListener {
         ActionListener startLevelAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                add(new GamePanel(levels[levelIndex], listener));
+                setLevel(levelIndex);
                 pack();
             }
         };
-
         showOverlayMessage("Level " + levelIndex, Color.WHITE, 2000, startLevelAction);
+    }
 
+    public void setLevel(int newIndex) {
+        levels[levelIndex] = levels[levelIndex].restart();
+        add(new GamePanel(levels[levelIndex], listener));
+        this.levelIndex = newIndex;
+        levels[levelIndex].setControllerListener(this);
+        this.listener.setLevel(levels[levelIndex]);
     }
 
     @Override

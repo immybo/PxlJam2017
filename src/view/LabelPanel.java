@@ -24,13 +24,5 @@ public class LabelPanel extends JPanel {
 
         this.setBackground(Color.BLACK);
         this.setOpaque(true);
-
-        Timer t = new javax.swing.Timer(150, new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                jLabel.setForeground(jLabel.getForeground().darker());
-            }
-        });
-        t.start();
     }
 }

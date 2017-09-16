@@ -36,7 +36,7 @@ public class Main {
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {
 						Level level = gf.getLevel();
-		    			level.tick(((float)delay)/1000f);
+						level.tick(((float)delay)/1000f);
 		    			gf.repaint();
 		    		}
 			  };

@@ -25,6 +25,18 @@ public class Level {
 		this.entitiesToRemove = new ArrayList<Entity>();
 		this.min = Vector.zero();
 		this.max = Vector.zero();
+		this.controllerListener = new ControllerListener(){
+
+			@Override
+			public void onPlayerDeath() {
+
+			}
+
+			@Override
+			public void onLevelFinish() {
+
+			}
+		};
 	}
 
 	public void setControllerListener(ControllerListener listener) {

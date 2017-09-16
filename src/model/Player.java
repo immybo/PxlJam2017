@@ -17,7 +17,7 @@ public class Player extends Character {
 	private Image texture;
 	private HashMap<StatusEffect, Long> statusTimeouts;
 	private long lastShotTime;
-	private double shootRate = 0.001;
+	private double shootRate = 0.01;
 	private Movement movement;
 
 	private enum Movement {
@@ -107,6 +107,11 @@ public class Player extends Character {
 		Vector min = getAABB().min();
 		Vector ext = getAABB().extents;
 		g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
+	}
+
+	public void damage(double damage){
+		if(!effects.contains(StatusEffect.FROZEN))
+			super.damage(damage);
 	}
 
 	@Override

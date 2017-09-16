@@ -85,12 +85,13 @@ public class Level {
 						if(ent instanceof Block && ent.isSolid())
 							this.removeEntity(e);
 						else if(ent instanceof Player && !((Bullet) e).friendler){
-							((Player)ent).addStatusEffect(((Bullet) e).effect);
 							((Character)ent).damage(((Bullet) e).getDamage());
+							((Player)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}
 						else if(ent instanceof Enemy && ((Bullet) e).friendler){
 							((Character)ent).damage(((Bullet) e).getDamage());
+							((Player)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}
 
@@ -195,7 +196,7 @@ public class Level {
 				}
 				else if (att.equals("FREEZEBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(15,25), null, null), 0, 100, level);
 					entities.add(freezeBoy);
 					reader.nextLine();
 				}

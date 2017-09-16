@@ -124,6 +124,10 @@ public class Level {
 
 					if (e instanceof Player) {
 						if (newY <= currentY) {
+							// If we're going fast enough, break our legs...
+							if (currentY - newY >= 3) {
+								getPlayer().addStatusEffect(StatusEffect.BROKEN_LEG);
+							}
 							getPlayer().setOnGround(true);
 						}
 
@@ -132,6 +136,11 @@ public class Level {
 							if (f instanceof Enemy) {
 								((Enemy)f).damage(Player.SPIKE_DAMAGE);
 							}
+						}
+
+						if (f instanceof PoissonBoy) {
+							entitiesToRemove.add(f); // BOOM
+							player.addStatusEffect(StatusEffect.POISONED);
 						}
 					}
 				}
@@ -208,6 +217,12 @@ public class Level {
 				else if (att.equals("SQUISHBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					entities.add(squishBoy);
+					reader.nextLine();
+				}
+				else if (att.equals("POISSONBOY-SPAWN:")){
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					PoissonBoy squishBoy= new PoissonBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
 					entities.add(squishBoy);
 					reader.nextLine();
 				}

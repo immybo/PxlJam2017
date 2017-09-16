@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends AbstractEntity implements Character {
-	private static final int JUMP_FORCE = 10;
+	public static final int JUMP_FORCE = 50;
 	private static final int MOVEMENT_SPEED = 500;
+	private boolean onGround;
+	private boolean jumpNextTick;
 
 	private static final int MAX_HORIZONTAL_SPEED = 10;
 
@@ -25,6 +27,12 @@ public class Player extends AbstractEntity implements Character {
 		super(aabb, depth, 10);
 		effects = new ArrayList<StatusEffect>();
 		this.movement = Movement.STATIONARY;
+		this.onGround = true;
+		this.jumpNextTick = false;
+	}
+
+	public void setOnGround(boolean value) {
+		this.onGround = value;
 	}
 
 	public void addStatusEffect(StatusEffect effect) {
@@ -58,11 +66,17 @@ public class Player extends AbstractEntity implements Character {
 			this.movement = Movement.STATIONARY;
 	}
 	public void jump() {
-		// This is just if they're moving down;
-		// TODO FIXME
-		if (getVelocity().y >= 0) {
-			this.applyForce(new Vector(0, -JUMP_FORCE));
+		if (this.onGround) {
+			this.jumpNextTick = true;
 		}
+	}
+
+	public boolean getJumpNextTick() {
+		return this.jumpNextTick;
+	}
+
+	public void setJumpNextTick(boolean value) {
+		this.jumpNextTick = value;
 	}
 
 	@Override
@@ -82,14 +96,15 @@ public class Player extends AbstractEntity implements Character {
 
 	@Override
 	public void tick(double dt){
-		double xSpeed = this.getVelocity().x;
+		double ySpeed = this.getVelocity().y;
+		double xSpeed;
 		if(this.movement == Movement.MOVE_RIGHT)
 			xSpeed = this.MOVEMENT_SPEED * dt;
-		if(this.movement == Movement.MOVE_LEFT)
+		else if(this.movement == Movement.MOVE_LEFT)
 			xSpeed = -this.MOVEMENT_SPEED * dt;
-		if(this.movement == Movement.STATIONARY)
+		else
 			xSpeed = 0;
-		this.applyForce(new Vector(xSpeed, 0));
+		this.setVelocity(new Vector(xSpeed, ySpeed));
 		super.tick(dt);
 	}
 }

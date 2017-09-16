@@ -29,6 +29,13 @@ public class Level {
 	}
 
 	public void tick(float dt) {
+		this.getPlayer().setOnGround(false);
+
+		if (this.getPlayer().getJumpNextTick()) {
+			this.getPlayer().applyForce(new Vector(0, -Player.JUMP_FORCE));
+			this.getPlayer().setJumpNextTick(false);
+		}
+
 		for (Entity e : entities) {
 			e.applyForce(new Vector(0, 1));
 			e.tick(dt);
@@ -39,14 +46,26 @@ public class Level {
 					continue;
 				}
 				double intF = AABB.getIntersectionFraction(e.getAABB(), o.getAABB(), dt);
-				System.out.println(intF);
 				if(intF < d) {
 					f = o;
 					d = intF;
 				}
 			}
 			if(f != null) {
+				// If we're the player, and we're colliding with something below us,
+				// we must be on the ground.
+				double currentY = e.getAABB().center.y;
+
 				AABB.doMove(e.getAABB(), f.getAABB(), dt);
+
+				double newY = e.getAABB().center.y;
+
+				if (e instanceof Player) {
+					if (newY <= currentY) {
+						getPlayer().setOnGround(true);
+
+					}
+				}
 			}
 		}
 	}

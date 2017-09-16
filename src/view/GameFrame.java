@@ -29,6 +29,20 @@ public class GameFrame extends JFrame implements ControllerListener {
         restart();
 
 
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                // Turn the player around based on where the mouse is
+                boolean isRight = e.getX() > getWidth()/4;
+                listener.onMouseMove(isRight);
+            }
+        });
+
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

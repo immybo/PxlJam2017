@@ -27,4 +27,8 @@ public class GameEventListener {
 	public void setLevel(Level level) {
 		this.level = level;
 	}
+
+    public void onMouseMove(boolean isRight) {
+		level.getPlayer().turn(isRight);
+    }
 }

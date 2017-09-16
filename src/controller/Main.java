@@ -25,6 +25,7 @@ public class Main {
 	};
 
 	public static void main(String[] args) {
+		SoundPlayer.playMusic("resources/backgroundMusic.wav");
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 				Level[] levels = new Level[LEVELS.length];

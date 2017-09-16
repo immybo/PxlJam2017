@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Player extends Character {
@@ -13,6 +14,7 @@ public class Player extends Character {
 	private boolean onGround;
 	private boolean jumpNextTick;
 	private Image texture;
+	private HashMap<StatusEffect, Long> statusTimeouts;
 
 	private Movement movement;
 
@@ -31,6 +33,10 @@ public class Player extends Character {
 		this.onGround = true;
 		this.jumpNextTick = false;
 		this.texture = texture;
+		this.statusTimeouts = new HashMap<StatusEffect, Long>();
+		for(StatusEffect s : StatusEffect.values()){
+			this.statusTimeouts.put(s, new Long(0));
+		}
 	}
 
 	public void setOnGround(boolean value) {
@@ -41,6 +47,7 @@ public class Player extends Character {
 		if (!effects.contains(effect)) {
 			effects.add(effect);
 		}
+		this.statusTimeouts.put(effect, System.currentTimeMillis() + 3000);
 	}
 
 	public void removeStatusEffect(StatusEffect effect) {
@@ -105,6 +112,11 @@ public class Player extends Character {
 		else
 			xSpeed = 0;
 		this.setVelocity(new Vector(xSpeed, ySpeed));
+		for(StatusEffect s : StatusEffect.values()){
+			if(this.statusTimeouts.get(s) <= System.currentTimeMillis()) {
+				this.removeStatusEffect(s);
+			}
+		}
 		super.tick(dt);
 	}
 }

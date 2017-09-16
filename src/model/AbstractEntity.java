@@ -14,11 +14,17 @@ public class AbstractEntity implements Entity {
 
 	private double mass;
 
-	public AbstractEntity(AABB aabb, int depth, double mass) {
+	private Level level;
+
+	public AbstractEntity(AABB aabb, int depth, double mass, Level level) {
 		this.aabb = aabb;
 		this.depth = depth;
 		this.mass = mass;
+		this.level = level;
 	}
+
+	@Override
+	public Level getLevel() { return this.level; }
 
 	@Override
 	public double getMass() { return this.mass; }

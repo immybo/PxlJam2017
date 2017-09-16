@@ -16,4 +16,5 @@ public interface Entity {
 	public void setVelocity(Vector v);
 	public Vector getVelocity();
 	public boolean isSolid();
+	public Level getLevel();
 }

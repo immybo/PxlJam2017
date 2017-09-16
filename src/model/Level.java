@@ -17,6 +17,8 @@ import javax.imageio.ImageIO;
 public class Level {
 	private Player player;
 	private List<Entity> entities;
+	private List<Entity> entitiesToAdd;
+	private List<Entity> entitiesToRemove;
 
 	public Level(List<Entity> entities) {
 		for (Entity e : entities) {
@@ -26,9 +28,28 @@ public class Level {
 			}
 		}
 		this.entities = entities;
+		this.entitiesToAdd = new ArrayList<Entity>();
+		this.entitiesToRemove = new ArrayList<Entity>();
+	}
+
+	public void addEntity(Entity newEntity) {
+		entitiesToAdd.add(newEntity);
+	}
+
+	public void removeEntity(Entity entity) {
+		entitiesToRemove.add(entity);
 	}
 
 	public void tick(float dt) {
+		for (Entity e : entitiesToAdd) {
+			entities.add(e);
+		}
+		entitiesToAdd.clear();
+		for (Entity e : entitiesToRemove) {
+			entities.remove(e);
+		}
+		entitiesToRemove.clear();
+
 		this.getPlayer().setOnGround(false);
 
 		if (this.getPlayer().getJumpNextTick()) {

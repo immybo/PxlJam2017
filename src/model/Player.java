@@ -1,15 +1,18 @@
 package model;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends AbstractEntity implements Character {
-	public static final int JUMP_FORCE = 50;
+public class Player extends Character {
+	public static final int JUMP_FORCE = 100;
 	private static final int MOVEMENT_SPEED = 500;
 	private boolean onGround;
 	private boolean jumpNextTick;
+	private Image texture;
 
 	private Movement movement;
 
@@ -21,12 +24,13 @@ public class Player extends AbstractEntity implements Character {
 
 	private List<StatusEffect> effects;
 
-	public Player(AABB aabb, int depth, Level level) {
+	public Player(AABB aabb, int depth, Level level, Image texture) {
 		super(aabb, depth, 10, level);
 		effects = new ArrayList<StatusEffect>();
 		this.movement = Movement.STATIONARY;
 		this.onGround = true;
 		this.jumpNextTick = false;
+		this.texture = texture;
 	}
 
 	public void setOnGround(boolean value) {
@@ -78,18 +82,11 @@ public class Player extends AbstractEntity implements Character {
 	}
 
 	@Override
-	public int getHealth() {
-		return 50;
-	}
-
-	@Override
-	public int getMaxHealth() {
-		return 100;
-	}
-
-	@Override
 	public void render(Graphics g) {
-		super.render(g);
+
+		Vector min = getAABB().min();
+		Vector ext = getAABB().extents;
+		g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
 	}
 
 	@Override

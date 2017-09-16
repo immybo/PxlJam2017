@@ -63,33 +63,54 @@ public class Level {
 		}
 
 		for (Entity e : entities) {
-			e.applyForce(new Vector(0, 1));
+			e.applyForce(new Vector(0, e.getMass()*0.7)); //0.7 magic number to reduce gravity
 			e.tick(dt);
-			Entity f = null;
-			double d = Double.POSITIVE_INFINITY;
-			for(Entity o : entities) {
-				if(e == o) {
-					continue;
-				}
-				double intF = AABB.getIntersectionFraction(e.getAABB(), o.getAABB(), dt);
-				if(intF < d) {
-					f = o;
-					d = intF;
+			if(e instanceof Bullet){
+				for(Entity ent : entities){
+					double fraction = AABB.getIntersectionFraction(ent.getAABB(), e.getAABB(), dt);
+					if(Double.isFinite(fraction)){
+						if(ent instanceof Block && ent.isSolid())
+							this.removeEntity(e);
+						else if(ent instanceof Player && !((Bullet) e).friendler){
+							((Player)ent).addStatusEffect(((Bullet) e).effect);
+							((Character)ent).damage(((Bullet) e).getDamage());
+							this.removeEntity(e);
+						}
+						else if(ent instanceof Enemy && ((Bullet) e).friendler){
+							((Character)ent).damage(((Bullet) e).getDamage());
+							this.removeEntity(e);
+						}
+
+					}
 				}
 			}
-			if(f != null) {
-				// If we're the player, and we're colliding with something below us,
-				// we must be on the ground.
-				double currentY = e.getAABB().center.y;
+			if(e.isSolid()) {
+				Entity f = null;
+				double d = Double.POSITIVE_INFINITY;
+				for (Entity o : entities) {
+					if (e == o || !o.isSolid()) {
+						continue;
+					}
+					double intF = AABB.getIntersectionFraction(e.getAABB(), o.getAABB(), dt);
+					if (intF < d) {
+						f = o;
+						d = intF;
+					}
+				}
+				if (f != null) {
+					// If we're the player, and we're colliding with something below us,
+					// we must be on the ground.
+					double currentY = e.getAABB().center.y;
 
-				AABB.doMove(e.getAABB(), f.getAABB(), dt);
+					AABB.doMove(e.getAABB(), f.getAABB(), dt);
 
-				double newY = e.getAABB().center.y;
+					double newY = e.getAABB().center.y;
 
-				if (e instanceof Player) {
-					if (newY <= currentY) {
-						getPlayer().setOnGround(true);
+					if (e instanceof Player) {
+						if (newY <= currentY) {
+							getPlayer().setOnGround(true);
 
+						}
 					}
 				}
 			}
@@ -117,12 +138,12 @@ public class Level {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(new AABB(spawn, new Vector(25,25), null, null), 0, level);
+					Player player = new Player(new AABB(spawn, new Vector(15,25), null, null), 0, level, ImageIO.read(new File("resources/characterWalk1.png")));
 					entities.add((player));
 					level.setPlayer(player);
 					reader.nextLine();
 				}
-				if (att.equals("WALL:")){
+				else if (att.equals("WALL:")){
 					String next = reader.next();
 					while(!next.equals(";")){
 						//Read wall entity dimensions
@@ -146,6 +167,12 @@ public class Level {
 						Wall wall = new Wall(new AABB(point, extents, null, null), texture, bounciness, depth, level);
 						entities.add(wall);
 					}
+				}
+				else if (att.equals("FREEZEBOY-SPAWN:")){
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					entities.add(freezeBoy);
+					reader.nextLine();
 				}
 			}
 			reader.close();

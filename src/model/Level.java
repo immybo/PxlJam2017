@@ -130,16 +130,18 @@ public class Level {
 							getPlayer().setOnGround(true);
 						}
 
-						// If we're spiky and it's an enemy, damage it
-						if (((Player)e).getEffects().contains(StatusEffect.SPIKY)) {
-							if (f instanceof Enemy) {
-								((Enemy)f).damage(Player.SPIKE_DAMAGE);
-							}
-						}
-
 						if (f instanceof PoissonBoy) {
 							entitiesToRemove.add(f); // BOOM
 							player.addStatusEffect(StatusEffect.POISONED);
+						}
+					}
+
+					if (e instanceof Character) {
+						// If one of the characters is spiky, damage the other one
+						if (((Character) e).getEffects().contains(StatusEffect.SPIKY)) {
+							if (f instanceof Character) {
+								((Character) f).damage(Character.SPIKE_DAMAGE);
+							}
 						}
 					}
 				}

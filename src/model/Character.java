@@ -5,6 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class Character extends AbstractEntity {
+	public static final int SPIKE_DAMAGE = 100000;
+
+	private Movement movement;
+
+	protected enum Movement {
+		MOVE_LEFT,
+		MOVE_RIGHT,
+		STATIONARY
+	};
 
 	private double health;
 	private HashMap<StatusEffect, Long> statusTimeouts;
@@ -18,6 +27,15 @@ public abstract class Character extends AbstractEntity {
 		for(StatusEffect s : StatusEffect.values()){
 			this.statusTimeouts.put(s, new Long(0));
 		}
+		this.movement = Movement.STATIONARY;
+	}
+
+	protected void setMovement(Movement newMovement) {
+		this.movement = newMovement;
+	}
+
+	protected Movement getMovement() {
+		return this.movement;
 	}
 
 	public void addStatusEffect(StatusEffect effect) {
@@ -39,10 +57,21 @@ public abstract class Character extends AbstractEntity {
 	
 	@Override
 	public void tick(double dt) {
+		double ySpeed = this.getVelocity().y;
+		double xSpeed = this.getVelocity().x;
+
 		if (effects.contains(StatusEffect.BUBBLE))
-			this.setVelocity(new Vector(0, this.getVelocity().y));
+			xSpeed = 0;
 		else if (effects.contains(StatusEffect.FROZEN))
-			this.setVelocity(new Vector(this.getVelocity().x, this.getVelocity().y));
+		{} // Do not change velocity when frozen
+		else if(this.getMovement() == Movement.MOVE_RIGHT)
+			xSpeed = getMovementSpeed() * dt;
+		else if(this.getMovement() == Movement.MOVE_LEFT)
+			xSpeed = -getMovementSpeed() * dt;
+		else
+			xSpeed = 0;
+
+		this.setVelocity(new Vector(xSpeed, ySpeed));
 
 		if(effects.contains(StatusEffect.ON_FIRE)) {
 			Vector vel = this.getVelocity();
@@ -60,5 +89,11 @@ public abstract class Character extends AbstractEntity {
 
 	public double getHealth(){ return health; }
 	public int getMaxHealth(){ return 100;}
-	public void damage(double damage){ this.health -= damage; }
+
+	public void damage(double damage) {
+		if (!effects.contains(StatusEffect.FROZEN))
+			this.health -= damage;
+	}
+
+	public abstract int getMovementSpeed();
 }

@@ -10,26 +10,17 @@ import java.util.List;
 
 public class Player extends Character {
 	public static final int JUMP_FORCE = 100;
-	public static final int SPIKE_DAMAGE = 100000;
 	private static final int MOVEMENT_SPEED = 500;
 	private boolean onGround;
 	private boolean jumpNextTick;
 	private Image texture;
 	private long lastShotTime;
 	private double shootRate = 0.01;
-	private Movement movement;
-
-	private enum Movement {
-			MOVE_LEFT,
-			MOVE_RIGHT,
-			STATIONARY
-	};
 
 
 	public Player(AABB aabb, int depth, Level level) {
 		super(aabb, depth, 10, level);
 		this.texture = Textures.PLAYER;
-		this.movement = Movement.STATIONARY;
 		this.onGround = true;
 		this.jumpNextTick = false;
 		this.lastShotTime = 0;
@@ -50,18 +41,18 @@ public class Player extends Character {
 	}
 
 	public void moveLeft() {
-		this.movement = Movement.MOVE_LEFT;
+		this.setMovement(Movement.MOVE_LEFT);
 	}
 	public void moveRight() {
-		this.movement = Movement.MOVE_RIGHT;
+		this.setMovement(Movement.MOVE_RIGHT);
 	}
 	public void stopLeftMovement() {
-		if (this.movement == Movement.MOVE_LEFT)
-			this.movement = Movement.STATIONARY;
+		if (this.getMovement() == Movement.MOVE_LEFT)
+			this.setMovement(Movement.STATIONARY);
 	}
 	public void stopRightMovement() {
-		if (this.movement == Movement.MOVE_RIGHT)
-			this.movement = Movement.STATIONARY;
+		if (this.getMovement() == Movement.MOVE_RIGHT)
+			this.setMovement(Movement.STATIONARY);
 	}
 	public void jump() {
 		if (this.onGround) {
@@ -84,23 +75,13 @@ public class Player extends Character {
 		g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
 	}
 
-	public void damage(double damage){
-		if(!effects.contains(StatusEffect.FROZEN))
-			super.damage(damage);
+	@Override
+	public void tick(double dt) {
+		super.tick(dt);
 	}
 
 	@Override
-	public void tick(double dt) {
-		double ySpeed = this.getVelocity().y;
-		double xSpeed;
-		if(this.movement == Movement.MOVE_RIGHT)
-			xSpeed = this.MOVEMENT_SPEED * dt;
-		else if(this.movement == Movement.MOVE_LEFT)
-			xSpeed = -this.MOVEMENT_SPEED * dt;
-		else
-			xSpeed = 0;
-
-		this.setVelocity(new Vector(xSpeed, ySpeed));
-		super.tick(dt);
+	public int getMovementSpeed() {
+		return 500;
 	}
 }

@@ -165,7 +165,7 @@ public class Level {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(new AABB(spawn, new Vector(15,25), null, null), 0, level);
+					Player player = new Player(new AABB(spawn, new Vector(15,25).mult(1.5), null, null), 0, level);
 					entities.add((player));
 					level.setPlayer(player);
 					reader.nextLine();
@@ -214,7 +214,7 @@ public class Level {
 				}
 				else if (att.equals("SQUISHBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(25,25).mult(10), null, null), 0, 100, level);
 					entities.add(squishBoy);
 					reader.nextLine();
 				}

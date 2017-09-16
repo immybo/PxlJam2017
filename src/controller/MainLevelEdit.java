@@ -2,6 +2,7 @@ package controller;
 
 import model.Entity;
 import model.Level;
+import model.LevelEditor;
 import model.Player;
 import view.GameEventListener;
 import view.GameFrame;
@@ -22,12 +23,14 @@ public class MainLevelEdit {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
-		    	Level level = Level.buildLevel(new File("resources/levels/testLevel"));
+		    	Level level = new LevelEditor(Level.buildLevel(new File("resources/levels/testLevel")));
+		    	System.out.println(level);
 				GameFrame gf = new GameFrame(level, new GameEventListener());
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {
 						Level level = gf.getLevel();
+						//System.out.println(level);
 		    			level.tick(((float)delay)/1000f);
 		    			gf.repaint();
 		    		}

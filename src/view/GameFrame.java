@@ -100,7 +100,7 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public void restart() {
-        Level level = Level.buildLevel(this.level.levelFile);
+        Level level = this.level.restart();
         setLevel(level);
     }
 

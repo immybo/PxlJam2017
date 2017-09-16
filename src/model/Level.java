@@ -9,10 +9,10 @@ import controller.ControllerListener;
 
 
 public class Level {
-	private Player player;
-	private List<Entity> entities;
-	private List<Entity> entitiesToAdd;
-	private List<Entity> entitiesToRemove;
+	protected Player player;
+	protected List<Entity> entities;
+	protected List<Entity> entitiesToAdd;
+	protected List<Entity> entitiesToRemove;
 	private ControllerListener controllerListener;
 	public File levelFile;
 
@@ -228,5 +228,9 @@ public class Level {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public Level restart() {
+		return Level.buildLevel(levelFile);
 	}
 }

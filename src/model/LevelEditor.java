@@ -1,17 +1,20 @@
 package model;
 
-import java.io.File;
-import java.util.List;
-
 public class LevelEditor extends Level{
 	
-	public LevelEditor(File levelFile) {
-		super(levelFile);
+	public LevelEditor(Level level) {
+		super(level.levelFile);
+		this.entities = level.entitiesToAdd;
 	}
 
 	@Override
 	public void tick(float dt) {
 		
+	}
+	
+	@Override
+	public Level restart() {
+		return this;
 	}
 
 }

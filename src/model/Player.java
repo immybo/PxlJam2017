@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Player extends Character {
 	public static final int JUMP_FORCE = 100;
+	public static final int SPIKE_DAMAGE = 100000;
 	private static final int MOVEMENT_SPEED = 500;
 	private boolean onGround;
 	private boolean jumpNextTick;
@@ -111,6 +112,11 @@ public class Player extends Character {
 			xSpeed = -this.MOVEMENT_SPEED * dt;
 		else
 			xSpeed = 0;
+		if(effects.contains(StatusEffect.ON_FIRE)) {
+			xSpeed *= 1.5;
+			this.damage(dt * 10);
+		}
+
 		this.setVelocity(new Vector(xSpeed, ySpeed));
 		for(StatusEffect s : StatusEffect.values()){
 			if(this.statusTimeouts.get(s) <= System.currentTimeMillis()) {

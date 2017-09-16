@@ -2,17 +2,11 @@ package model;
 
 import controller.ControllerListener;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Area;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
 import javax.imageio.ImageIO;
 
@@ -56,6 +50,15 @@ public class Level {
 		// Did we ded?
 		if (this.getPlayer().getHealth() <= 0) {
 			controllerListener.onPlayerDeath();
+		}
+
+		// Did enemies ded?
+		for (Entity e : entities) {
+			if (e instanceof Enemy) {
+				if (((Enemy)e).getHealth() <= 0) {
+					entitiesToRemove.add(e);
+				}
+			}
 		}
 
 		for (Entity e : entitiesToAdd) {
@@ -122,7 +125,13 @@ public class Level {
 					if (e instanceof Player) {
 						if (newY <= currentY) {
 							getPlayer().setOnGround(true);
+						}
 
+						// If we're spiky and it's an enemy, damage it
+						if (((Player)e).getEffects().contains(StatusEffect.SPIKY)) {
+							if (f instanceof Enemy) {
+								((Enemy)f).damage(Player.SPIKE_DAMAGE);
+							}
 						}
 					}
 				}
@@ -182,6 +191,24 @@ public class Level {
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
 					entities.add(freezeBoy);
+					reader.nextLine();
+				}
+				else if (att.equals("BURNBOY-SPAWN:")){
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					BurnBoy burnBoy= new BurnBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					entities.add(burnBoy);
+					reader.nextLine();
+				}
+				else if (att.equals("SPIKEBOY-SPAWN:")){
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					SpikeBoy spikeBoy= new SpikeBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					entities.add(spikeBoy);
+					reader.nextLine();
+				}
+				else if (att.equals("SQUISHBOY-SPAWN:")){
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					entities.add(squishBoy);
 					reader.nextLine();
 				}
 			}

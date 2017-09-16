@@ -5,6 +5,7 @@ public class LevelEditor extends Level{
 	public LevelEditor(Level level) {
 		super(level.levelFile);
 		this.entities = level.entitiesToAdd;
+		this.player = level.player;
 	}
 
 	@Override

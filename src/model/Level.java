@@ -15,12 +15,16 @@ public class Level {
 	protected List<Entity> entitiesToRemove;
 	private ControllerListener controllerListener;
 	public File levelFile;
+	Vector min;
+	Vector max;
 
 	public Level(File levelFile) {
 		this.levelFile = levelFile;
 		this.entities = new ArrayList<Entity>();
 		this.entitiesToAdd = new ArrayList<Entity>();
 		this.entitiesToRemove = new ArrayList<Entity>();
+		this.min = Vector.zero();
+		this.max = Vector.zero();
 	}
 
 	public void setControllerListener(ControllerListener listener) {
@@ -29,6 +33,15 @@ public class Level {
 
 	public void addEntity(Entity newEntity) {
 		entitiesToAdd.add(newEntity);
+		if(newEntity.getAABB().min().x < min.x)
+			min = new Vector(newEntity.getAABB().min().x, min.y);
+		if(newEntity.getAABB().min().y < min.y)
+			min = new Vector(min.x, newEntity.getAABB().min().y);
+		if(newEntity.getAABB().max().x > max.x)
+			max = new Vector(newEntity.getAABB().max().x, max.y);
+		if(newEntity.getAABB().max().y > max.y)
+			max = new Vector(max.x, newEntity.getAABB().max().y);
+		System.out.println(min.x+" "+min.y+" "+max.x+" "+max.y);
 	}
 
 	public void removeEntity(Entity entity) {
@@ -67,8 +80,7 @@ public class Level {
 		this.getPlayer().setOnGround(false);
 
 		if (this.getPlayer().getJumpNextTick()) {
-			double jumpForce = this.getPlayer().legBroken() ? -Player.JUMP_FORCE*1.5 : -Player.JUMP_FORCE;
-			this.getPlayer().applyForce(new Vector(0, jumpForce));
+			this.getPlayer().applyForce(new Vector(0, -Player.JUMP_FORCE));
 			this.getPlayer().setJumpNextTick(false);
 		}
 
@@ -88,8 +100,10 @@ public class Level {
 						}
 						else if(ent instanceof Enemy && ((Bullet) e).friendler){
 							((Character)ent).damage(((Bullet) e).getDamage());
+							((Player)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}
+
 					}
 				}
 			}

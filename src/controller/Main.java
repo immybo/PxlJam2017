@@ -19,10 +19,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 public class Main {
+	public static final String[] LEVELS = {
+			"resources/levels/testLevel"
+	};
+
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
-				GameFrame gf = new GameFrame("resources/levels/testLevel", new GameEventListener());
+
+
+				GameFrame gf = new GameFrame(LEVELS, new GameEventListener());
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {

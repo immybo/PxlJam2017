@@ -164,6 +164,8 @@ public class AABB {
 		    // TODO normal discrete collision detection / separation code correct?
 			Vector penetrationVector = md.closestPointOnBoundsToPoint(Vector.zero());
 			boxA.center = boxA.center.add(penetrationVector);
+
+			boxA.velocity = Vector.zero();
 		}
 		else
 		{

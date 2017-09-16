@@ -4,10 +4,8 @@ import controller.ControllerListener;
 import model.Level;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 
 public class GameFrame extends JFrame implements ControllerListener {
@@ -27,7 +25,23 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.levelIndex = 0;
 
         this.listener = listener;
+
         restart();
+
+
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                // Turn the player around based on where the mouse is
+                boolean isRight = e.getX() > getWidth()/4;
+                listener.onMouseMove(isRight);
+            }
+        });
 
         this.addMouseListener(new MouseListener() {
             @Override
@@ -95,6 +109,10 @@ public class GameFrame extends JFrame implements ControllerListener {
                 }
             }
         });
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        pack();
     }
 
     public Level getLevel() {
@@ -113,10 +131,17 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
-        this.add(new GamePanel(levels[levelIndex], listener));
-        this.pack();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+
+        ActionListener startLevelAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                add(new GamePanel(levels[levelIndex], listener));
+                pack();
+            }
+        };
+
+        showOverlayMessage("Level " + levelIndex, Color.WHITE, 2000, startLevelAction);
+
     }
 
     @Override
@@ -135,5 +160,21 @@ public class GameFrame extends JFrame implements ControllerListener {
         }
 
         restart();
+    }
+
+    private void showOverlayMessage(String message, Color color, int time, ActionListener listener) {
+        JPanel labelPanel = new LabelPanel(message, color);
+        labelPanel.setPreferredSize(new Dimension(1000, 800));
+        add(labelPanel);
+        revalidate();
+        Timer t = new javax.swing.Timer(time, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                remove(labelPanel);
+                revalidate();
+                listener.actionPerformed(e);
+            }
+        });
+        t.start();
     }
 }

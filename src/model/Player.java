@@ -2,7 +2,9 @@ package model;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.AffineTransformOp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +24,7 @@ public class Player extends Character {
 	private double textureChangeRate = 0.005;
 	private double textureChangeTime;
 	private boolean isCrawling;
+	private boolean isFacingRight;
 
 	private AABB defaultAABB;
 	private AABB crawlingAABB;
@@ -42,6 +45,7 @@ public class Player extends Character {
 		Vector crawlingCenter = new Vector(defaultAABB.center.x, defaultAABB.center.y + (defaultAABB.get_size().y*0.25));
 		Vector crawlingSize = new Vector(defaultAABB.get_size().x, defaultAABB.get_size().y*0.25);
 		this.crawlingAABB = new AABB(crawlingCenter, crawlingSize, defaultAABB.velocity, defaultAABB.acceleration);
+		this.isFacingRight = true;
 	}
 
 	public void setOnGround(boolean value) {
@@ -89,7 +93,12 @@ public class Player extends Character {
 	public void render(Graphics g) {
 		Vector min = getAABB().min();
 		Vector ext = getAABB().extents;
-		g.drawImage(currentTexture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
+
+		if (isFacingRight) {
+			g.drawImage(currentTexture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
+		} else {
+			g.drawImage(currentTexture, (int) min.x + currentTexture.getWidth(null), (int) min.y, (int) (-2 * ext.x), (int) (2 * ext.y), null);
+		}
 	}
 
 	@Override
@@ -134,5 +143,11 @@ public class Player extends Character {
 	@Override
 	public int getMovementSpeed() {
 		return 500;
+	}
+
+
+
+	public void turn(boolean isRight) {
+		this.isFacingRight = isRight;
 	}
 }

@@ -9,7 +9,7 @@ public abstract class Character extends AbstractEntity {
 
 	private Movement movement;
 
-	protected enum Movement {
+    protected enum Movement {
 		MOVE_LEFT,
 		MOVE_RIGHT,
 		STATIONARY

@@ -145,9 +145,16 @@ public class GameFrame extends JFrame implements ControllerListener {
 
     @Override
     public void onPlayerDeath() {
-        JOptionPane.showMessageDialog(this, "YOU DED BOI");
-        this.getLevel().getPlayer().damage(-100); // HACKETY HACK :)
-        restart();
+        this.getLevel().getPlayer().damage(-100000000); // HACKETY HACK :)
+        this.getContentPane().removeAll();
+        this.revalidate();
+        this.repaint();
+        showOverlayMessage("You died; RIP.", Color.WHITE, 2000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restart();
+            }
+        });
     }
 
     @Override

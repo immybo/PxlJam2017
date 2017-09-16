@@ -84,6 +84,7 @@ public class Level {
 					}
 				}
 			}
+
 			if(e.isSolid()) {
 				Entity f = null;
 				double d = Double.POSITIVE_INFINITY;

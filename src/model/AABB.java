@@ -166,6 +166,8 @@ public class AABB {
 			boxA.center = boxA.center.add(penetrationVector);
 
 			boxA.velocity = Vector.zero();
+	        Vector tangent = penetrationVector.normalized().tangent();
+	        boxA.velocity = tangent.mult(boxA.velocity.dot(tangent));
 		}
 		else
 		{

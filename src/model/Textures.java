@@ -14,6 +14,10 @@ public class Textures {
 	public static final Image DIRT = read("dirt.png");
 	public static final Image FREEZE_BOY = read("freezeBoy.png");
 	public static final Image SQUISH_BOY = read("squishBoy.png");
+	public static final Image BURN_BOY = read("burnBoy.png");
+	public static final Image SPIKE_BOY = read("spikeBoy.png");
+	public static final Image POISSON_BOY = read("poisonBoy.png");
+	public static final Image BUBBLE_BOY = read("bubbleBoy.png");
 	public static final Image BULLET = read("statusBubbleOn.png");
 	
 	private static Image read(String name) {

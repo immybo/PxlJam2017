@@ -131,15 +131,16 @@ public class Level {
 					// If we're the player, and we're colliding with something below us,
 					// we must be on the ground.
 					double currentY = e.getAABB().center.y;
-
+					double velY = e instanceof Player ? e.getVelocity().y : Double.MIN_VALUE;
 					AABB.doMove(e.getAABB(), f.getAABB(), dt);
 
 					double newY = e.getAABB().center.y;
 
 					if (e instanceof Player) {
-						if (newY <= currentY) {
+						System.out.println(velY);
+						if (velY > 0) {
 							// If we're going fast enough, break our legs...
-							if (currentY - newY >= 3) {
+							if (velY > 14) { //Magic number velocity we are have to be going to break leg
 								getPlayer().addStatusEffect(StatusEffect.BROKEN_LEG);
 							}
 							getPlayer().setOnGround(true);

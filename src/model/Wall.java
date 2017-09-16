@@ -10,8 +10,8 @@ public class Wall extends Block {
 	private double bounciness;
 	private Image texture;
 
-	public Wall(AABB aabb, Image texture, double bounciness, int depth) {
-		super(aabb, depth, 100);
+	public Wall(AABB aabb, Image texture, double bounciness, int depth, Level level) {
+		super(aabb, depth, 100, level);
 		this.bounciness = bounciness;
 		this.texture = texture;
 	}

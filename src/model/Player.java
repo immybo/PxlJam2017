@@ -11,8 +11,6 @@ public class Player extends AbstractEntity implements Character {
 	private boolean onGround;
 	private boolean jumpNextTick;
 
-	private static final int MAX_HORIZONTAL_SPEED = 10;
-
 	private Movement movement;
 
 	private enum Movement {
@@ -23,8 +21,8 @@ public class Player extends AbstractEntity implements Character {
 
 	private List<StatusEffect> effects;
 
-	public Player(AABB aabb, int depth) {
-		super(aabb, depth, 10);
+	public Player(AABB aabb, int depth, Level level) {
+		super(aabb, depth, 10, level);
 		effects = new ArrayList<StatusEffect>();
 		this.movement = Movement.STATIONARY;
 		this.onGround = true;

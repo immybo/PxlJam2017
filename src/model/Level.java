@@ -40,6 +40,11 @@ public class Level {
 		entitiesToRemove.add(entity);
 	}
 
+	private void setPlayer(Player p) {
+		this.player = p;
+	}
+
+
 	public void tick(float dt) {
 		for (Entity e : entitiesToAdd) {
 			entities.add(e);
@@ -103,6 +108,7 @@ public class Level {
 
 	public static Level buildLevel(File file){
 		ArrayList entities = new ArrayList();
+		Level level = new Level(entities);
 		try {
 			Scanner reader = new Scanner(file);
 			String levelName = reader.next();
@@ -111,8 +117,9 @@ public class Level {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(new AABB(spawn, new Vector(25,25), null, null), 0);
+					Player player = new Player(new AABB(spawn, new Vector(25,25), null, null), 0, level);
 					entities.add((player));
+					level.setPlayer(player);
 					reader.nextLine();
 				}
 				if (att.equals("WALL:")){
@@ -136,13 +143,13 @@ public class Level {
 						BufferedImage texture = ImageIO.read(new File("resources/dirt.png"));
 						double bounciness = 1.0;
 						int depth = 0;
-						Wall wall = new Wall(new AABB(point, extents, null, null), texture, bounciness, depth);
+						Wall wall = new Wall(new AABB(point, extents, null, null), texture, bounciness, depth, level);
 						entities.add(wall);
 					}
 				}
 			}
 			reader.close();
-			return new Level(entities);
+			return level;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -67,7 +67,8 @@ public class Level {
 		this.getPlayer().setOnGround(false);
 
 		if (this.getPlayer().getJumpNextTick()) {
-			this.getPlayer().applyForce(new Vector(0, -Player.JUMP_FORCE));
+			double jumpForce = this.getPlayer().legBroken() ? -Player.JUMP_FORCE*1.5 : -Player.JUMP_FORCE;
+			this.getPlayer().applyForce(new Vector(0, jumpForce));
 			this.getPlayer().setJumpNextTick(false);
 		}
 
@@ -87,10 +88,8 @@ public class Level {
 						}
 						else if(ent instanceof Enemy && ((Bullet) e).friendler){
 							((Character)ent).damage(((Bullet) e).getDamage());
-							((Player)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}
-
 					}
 				}
 			}

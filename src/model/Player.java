@@ -1,5 +1,7 @@
 package model;
 
+import controller.SoundPlayer;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -60,6 +62,7 @@ public class Player extends Character {
 			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
 			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, StatusEffect.NONE);
 			this.getLevel().addEntity(bullet);
+			SoundPlayer.playSound("resources/gun.wav");
 		}
 	}
 

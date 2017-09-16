@@ -21,11 +21,11 @@ public class GameFrame extends JFrame implements ControllerListener {
     private String levelPath;
     private Level level;
 
-    public GameFrame(String levelPath, GameEventListener listener) {
+    public GameFrame(String[] levels, GameEventListener listener) {
         super();
 
         this.listener = listener;
-        this.levelPath = levelPath;
+        this.levelPath = levels[0];
         restart();
 
         this.addMouseListener(new MouseListener() {

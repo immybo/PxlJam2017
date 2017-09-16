@@ -6,6 +6,8 @@ import model.Level;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 
 public class GameFrame extends JFrame implements ControllerListener {
@@ -25,6 +27,34 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.listener = listener;
         this.levelPath = levelPath;
         restart();
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                boolean isRight = e.getX() > getWidth()/4;
+                listener.onMousePress(isRight);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         this.addKeyListener(new KeyListener(){
 

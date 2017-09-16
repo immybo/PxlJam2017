@@ -10,12 +10,14 @@ import java.util.List;
 
 public class Player extends Character {
 	public static final int JUMP_FORCE = 100;
+	public static final int SPIKE_DAMAGE = 100000;
 	private static final int MOVEMENT_SPEED = 500;
 	private boolean onGround;
 	private boolean jumpNextTick;
 	private Image texture;
 	private HashMap<StatusEffect, Long> statusTimeouts;
-
+	private long lastShotTime;
+	private double shootRate = 0.001;
 	private Movement movement;
 
 	private enum Movement {
@@ -35,6 +37,7 @@ public class Player extends Character {
 		this.jumpNextTick = false;
 		this.texture = texture;
 		this.statusTimeouts = new HashMap<StatusEffect, Long>();
+		this.lastShotTime = 0;
 		for(StatusEffect s : StatusEffect.values()){
 			this.statusTimeouts.put(s, new Long(0));
 		}
@@ -59,6 +62,16 @@ public class Player extends Character {
 
 	public List<StatusEffect> getEffects() {
 		return effects;
+	}
+
+	public void shoot(boolean isRight){
+		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
+			//pewpew
+			Vector vector = isRight ? new Vector(10,0) : new Vector(-10,0);
+			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
+			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, vector, true, StatusEffect.NONE);
+			this.getLevel().addEntity(bullet);
+		}
 	}
 
 	public void moveLeft() {
@@ -111,6 +124,11 @@ public class Player extends Character {
 			xSpeed = -this.MOVEMENT_SPEED * dt;
 		else
 			xSpeed = 0;
+		if(effects.contains(StatusEffect.ON_FIRE)) {
+			xSpeed *= 1.5;
+			this.damage(dt * 10);
+		}
+
 		this.setVelocity(new Vector(xSpeed, ySpeed));
 		for(StatusEffect s : StatusEffect.values()){
 			if(this.statusTimeouts.get(s) <= System.currentTimeMillis()) {

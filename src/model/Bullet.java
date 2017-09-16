@@ -8,7 +8,7 @@ public class Bullet extends AbstractEntity {
     public Bullet(AABB aabb, int depth, double mass, Level level, int damage, Vector velocity, boolean friendler, StatusEffect effect) {
         super(aabb, depth, mass, level);
         this.damage = damage;
-        this.setVelocity(this.getVelocity().add(velocity));
+        this.setVelocity(velocity);
         this.friendler = friendler;
         this.effect = effect;
     }

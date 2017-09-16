@@ -1,14 +1,12 @@
 package model;
 
-import controller.ControllerListener;
-
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
+import controller.ControllerListener;
+
 
 public class Level {
 	private Player player;
@@ -166,7 +164,7 @@ public class Level {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(new AABB(spawn, new Vector(15,25), null, null), 0, level, ImageIO.read(new File("resources/characterWalk1.png")));
+					Player player = new Player(new AABB(spawn, new Vector(15,25), null, null), 0, level);
 					entities.add((player));
 					level.setPlayer(player);
 					reader.nextLine();
@@ -189,10 +187,9 @@ public class Level {
 
 						Vector point = new Vector((double) x, (double) y);
 						Vector extents = new Vector(width/2,height/2);
-						BufferedImage texture = ImageIO.read(new File("resources/dirt.png"));
 						double bounciness = 1.0;
 						int depth = 0;
-						Wall wall = new Wall(new AABB(point, extents, null, null), texture, bounciness, depth, level);
+						Wall wall = new Wall(new AABB(point, extents, null, null), Textures.DIRT, bounciness, depth, level);
 						entities.add(wall);
 					}
 				}

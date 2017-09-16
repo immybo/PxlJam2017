@@ -28,8 +28,9 @@ public class Player extends Character {
 
 	private List<StatusEffect> effects;
 
-	public Player(AABB aabb, int depth, Level level, Image texture) {
+	public Player(AABB aabb, int depth, Level level) {
 		super(aabb, depth, 10, level);
+		this.texture = Textures.PLAYER;
 		effects = new ArrayList<StatusEffect>();
 		this.movement = Movement.STATIONARY;
 		this.onGround = true;
@@ -103,7 +104,6 @@ public class Player extends Character {
 
 	@Override
 	public void render(Graphics g) {
-
 		Vector min = getAABB().min();
 		Vector ext = getAABB().extents;
 		g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);

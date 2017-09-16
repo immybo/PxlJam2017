@@ -53,7 +53,6 @@ public class Level {
 			max = new Vector(newEntity.getAABB().max().x, max.y);
 		if(newEntity.getAABB().max().y > max.y)
 			max = new Vector(max.x, newEntity.getAABB().max().y);
-		System.out.println(min.x+" "+min.y+" "+max.x+" "+max.y);
 	}
 
 	public void removeEntity(Entity entity) {
@@ -98,7 +97,8 @@ public class Level {
 		this.getPlayer().setOnGround(false);
 
 		if (this.getPlayer().getJumpNextTick()) {
-			this.getPlayer().applyForce(new Vector(0, -Player.JUMP_FORCE));
+			double jumpForce = this.getPlayer().getEffects().contains(StatusEffect.BROKEN_LEG) ? -Player.JUMP_FORCE * 1.5 : -Player.JUMP_FORCE;
+			this.getPlayer().applyForce(new Vector(0, jumpForce));
 			this.getPlayer().setJumpNextTick(false);
 		}
 
@@ -144,7 +144,9 @@ public class Level {
 					// we must be on the ground.
 					double currentY = e.getAABB().center.y;
 					double velY = e instanceof Player ? e.getVelocity().y : Double.MIN_VALUE;
-					AABB.doMove(e.getAABB(), f.getAABB(), dt);
+					if(!(f instanceof Player && e instanceof Block)) {
+						AABB.doMove(e.getAABB(), f.getAABB(), dt);
+					}
 
 					double newY = e.getAABB().center.y;
 
@@ -218,7 +220,7 @@ public class Level {
 						Vector extents = new Vector(width/2,height/2);
 						double bounciness = 1.0;
 						int depth = 0;
-						Wall wall = new Wall(new AABB(point, extents, null, null), Textures.DIRT, bounciness, depth, level);
+						Wall wall = new Wall(new AABB(point.add(extents), extents, null, null), Textures.DIRT, bounciness, depth, level);
 						level.addEntity(wall);
 					}
 				}

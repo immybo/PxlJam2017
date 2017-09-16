@@ -13,6 +13,11 @@ public class GameFrame extends JFrame implements ControllerListener {
     public final static char MOVE_LEFT_KEY = 'a';
     public final static char JUMP_KEY = ' ';
     public final static char RESTART_KEY = 'r';
+    public final static char POWER_1 = '1';
+    public final static char POWER_2 = '2';
+    public final static char POWER_3 = '3';
+    public final static char POWER_4 = '4';
+    public final static char POWER_5 = '5';
 
     private GameEventListener listener;
 
@@ -89,6 +94,21 @@ public class GameFrame extends JFrame implements ControllerListener {
                         break;
                     case RESTART_KEY:
                         restart();
+                        break;
+                    case POWER_1:
+                        listener.onPower1();
+                        break;
+                    case POWER_2:
+                        listener.onPower2();
+                        break;
+                    case POWER_3:
+                        listener.onPower3();
+                        break;
+                    case POWER_4:
+                        listener.onPower4();
+                        break;
+                    case POWER_5:
+                        listener.onPower5();
                         break;
                 }
             }

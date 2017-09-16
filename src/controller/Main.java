@@ -20,6 +20,7 @@ import javax.swing.Timer;
 
 public class Main {
 	public static final String[] LEVELS = {
+			"resources/levels/aLevelOfSorts",
 			"resources/levels/testLevel",
 			"resources/levels/testLevel"
 	};

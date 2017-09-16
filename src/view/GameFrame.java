@@ -132,10 +132,8 @@ public class GameFrame extends JFrame implements ControllerListener {
         if (levelIndex == levels.length) {
             JOptionPane.showMessageDialog(this, "You've finished all the levels. Click OK to start again.");
             levelIndex = 0;
-            restart();
-            return;
         }
 
-        setLevel(levelIndex);
+        restart();
     }
 }

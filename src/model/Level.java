@@ -137,7 +137,6 @@ public class Level {
 					double newY = e.getAABB().center.y;
 
 					if (e instanceof Player) {
-						System.out.println(velY);
 						if (velY > 0) {
 							// If we're going fast enough, break our legs...
 							if (velY > 14) { //Magic number velocity we are have to be going to break leg

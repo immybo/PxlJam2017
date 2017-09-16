@@ -127,52 +127,52 @@ public class Level {
 			}
 
 			if(e.isSolid()) {
-				Entity f = null;
-				double d = Double.POSITIVE_INFINITY;
+				//Entity f = null;
+				//double d = Double.POSITIVE_INFINITY;
 				for (Entity o : entities) {
 					if (e == o || !o.isSolid()) {
 						continue;
 					}
 					double intF = AABB.getIntersectionFraction(e.getAABB(), o.getAABB(), dt);
-					if (intF < d) {
+					Entity f = null;
+					if (intF < Double.POSITIVE_INFINITY) {
 						f = o;
-						d = intF;
-					}
+						if (f != null) {
+							// If we're the player, and we're colliding with something below us,
+							// we must be on the ground.
+							double oldY = e.getAABB().center.y;
+							double velY = e instanceof Player ? e.getVelocity().y : Double.MIN_VALUE;
+							if(!(f instanceof Player && e instanceof Block)) {
+								AABB.doMove(e.getAABB(), f.getAABB(), dt);
+							}
+
+							double newY = e.getAABB().center.y;
+
+							if (e instanceof Player) {
+								if (velY > 0 && oldY > newY) {
+									// If we're going fast enough, break our legs...
+									if (velY > 14) { //Magic number velocity we are have to be going to break leg
+										getPlayer().addStatusEffect(StatusEffect.BROKEN_LEG);
+									}
+									getPlayer().setOnGround(true);
+								}
+
+								if (f instanceof PoissonBoy) {
+									entitiesToRemove.add(f); // BOOM
+									player.addStatusEffect(StatusEffect.POISONED);
+								}
+							}
+
+							if (e instanceof Character) {
+								// If one of the characters is spiky, damage the other one
+								if (((Character) e).getEffects().contains(StatusEffect.SPIKY)) {
+									if (f instanceof Character) {
+										((Character) f).damage(Character.SPIKE_DAMAGE);
+									}
+								}
+							}
+						}
 				}
-				if (f != null) {
-					// If we're the player, and we're colliding with something below us,
-					// we must be on the ground.
-					double currentY = e.getAABB().center.y;
-					double velY = e instanceof Player ? e.getVelocity().y : Double.MIN_VALUE;
-					if(!(f instanceof Player && e instanceof Block)) {
-						AABB.doMove(e.getAABB(), f.getAABB(), dt);
-					}
-
-					double newY = e.getAABB().center.y;
-
-					if (e instanceof Player) {
-						if (velY > 0) {
-							// If we're going fast enough, break our legs...
-							if (velY > 14) { //Magic number velocity we are have to be going to break leg
-								getPlayer().addStatusEffect(StatusEffect.BROKEN_LEG);
-							}
-							getPlayer().setOnGround(true);
-						}
-
-						if (f instanceof PoissonBoy) {
-							entitiesToRemove.add(f); // BOOM
-							player.addStatusEffect(StatusEffect.POISONED);
-						}
-					}
-
-					if (e instanceof Character) {
-						// If one of the characters is spiky, damage the other one
-						if (((Character) e).getEffects().contains(StatusEffect.SPIKY)) {
-							if (f instanceof Character) {
-								((Character) f).damage(Character.SPIKE_DAMAGE);
-							}
-						}
-					}
 				}
 			}
 		}

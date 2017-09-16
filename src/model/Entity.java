@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 public interface Entity {
 	public int getDepth();
 	public AABB getAABB();
+	public void setAABB(AABB newAABB);
 	public void render(Graphics graphics);
 	public void setPosition(Vector v);
 	public void applyForce(Vector v);

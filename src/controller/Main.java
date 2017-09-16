@@ -19,6 +19,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 public class Main {
+	public static final String[] LEVELS = {
+			"resources/levels/testLevel"
+	};
+
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {

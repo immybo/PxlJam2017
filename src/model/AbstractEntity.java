@@ -43,6 +43,9 @@ public class AbstractEntity implements Entity {
 	}
 
 	@Override
+	public void setAABB(AABB aabb) { this.aabb = aabb; }
+
+	@Override
 	public void render(Graphics g) {
 		getAABB().draw(g);
 		g.drawString(this.getClass().getSimpleName(), (int) getAABB().min().x, (int) getAABB().min().y);

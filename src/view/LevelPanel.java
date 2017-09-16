@@ -25,7 +25,7 @@ public class LevelPanel extends JPanel {
 
         // Translate to get the effect of moving
         Vector playerPosition = level.getPlayer().getAABB().center;
-        int playerTranslateX = (int)(width/2 - playerPosition.x);
+        int playerTranslateX = (int)(width/4 - playerPosition.x);
         int playerTranslateY = (int)(height/2 - playerPosition.y);
         g.translate(playerTranslateX, playerTranslateY);
 

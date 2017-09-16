@@ -63,13 +63,13 @@ public class Player extends Character {
 		return effects;
 	}
 
-	public void shoot(){
+	public void shoot(boolean isRight){
 		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
 			//pewpew
+			Vector vector = isRight ? new Vector(10,0) : new Vector(-10,0);
 			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
-
-				Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, new Vector(10, 0), true, StatusEffect.NONE);
-				this.getLevel().addEntity(bullet);
+			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, vector, true, StatusEffect.NONE);
+			this.getLevel().addEntity(bullet);
 		}
 	}
 

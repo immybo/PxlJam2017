@@ -31,7 +31,8 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                listener.onMousePress();
+                boolean isRight = e.getX() > getWidth()/4;
+                listener.onMousePress(isRight);
             }
 
             @Override

@@ -63,6 +63,7 @@ public class Level {
 		}
 
 		for (Entity e : entities) {
+			double currentY = e.getAABB().center.y;
 			e.applyForce(new Vector(0, 1));
 			e.tick(dt);
 			Entity f = null;
@@ -80,7 +81,6 @@ public class Level {
 			if(f != null) {
 				// If we're the player, and we're colliding with something below us,
 				// we must be on the ground.
-				double currentY = e.getAABB().center.y;
 
 				AABB.doMove(e.getAABB(), f.getAABB(), dt);
 

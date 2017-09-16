@@ -1,5 +1,7 @@
 package model;
 
+import controller.ControllerListener;
+
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Area;
@@ -19,6 +21,7 @@ public class Level {
 	private List<Entity> entities;
 	private List<Entity> entitiesToAdd;
 	private List<Entity> entitiesToRemove;
+	private ControllerListener controllerListener;
 
 	public Level(List<Entity> entities) {
 		for (Entity e : entities) {
@@ -30,6 +33,10 @@ public class Level {
 		this.entities = entities;
 		this.entitiesToAdd = new ArrayList<Entity>();
 		this.entitiesToRemove = new ArrayList<Entity>();
+	}
+
+	public void setControllerListener(ControllerListener listener) {
+		this.controllerListener = listener;
 	}
 
 	public void addEntity(Entity newEntity) {
@@ -46,6 +53,11 @@ public class Level {
 
 
 	public void tick(float dt) {
+		// Did we ded?
+		if (this.getPlayer().getHealth() <= 0) {
+			controllerListener.onPlayerDeath();
+		}
+
 		for (Entity e : entitiesToAdd) {
 			entities.add(e);
 		}
@@ -117,7 +129,7 @@ public class Level {
 			}
 		}
 	}
-	
+
 	public List<Entity> getEntities() {
 		return entities;
 	}

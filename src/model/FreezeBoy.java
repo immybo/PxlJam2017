@@ -28,7 +28,7 @@ public class FreezeBoy extends Enemy {
         AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
         this.shootTimer += dt;
         if(this.shootTimer >= 1) {
-            Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, new Vector(-10, 0), false, StatusEffect.FROZEN);
+            Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, new Vector(-10, 0), false, StatusEffect.FROZEN);
             this.getLevel().addEntity(bullet);
             this.shootTimer = 0;
         }

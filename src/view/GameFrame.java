@@ -1,5 +1,6 @@
 package view;
 
+import controller.ControllerListener;
 import model.Level;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements ControllerListener {
     public final static char MOVE_RIGHT_KEY = 'd';
     public final static char MOVE_LEFT_KEY = 'a';
     public final static char JUMP_KEY = ' ';
@@ -76,6 +77,7 @@ public class GameFrame extends JFrame {
 
     public void setLevel(Level level) {
         this.level = level;
+        level.setControllerListener(this);
         this.listener.setLevel(level);
         this.getContentPane().removeAll();
         this.revalidate();
@@ -84,5 +86,10 @@ public class GameFrame extends JFrame {
         this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    @Override
+    public void onPlayerDeath() {
+        restart();
     }
 }

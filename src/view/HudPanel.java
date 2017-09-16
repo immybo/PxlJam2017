@@ -68,7 +68,7 @@ public class HudPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         double playerHealth = (player.getHealth()+0.0) / player.getMaxHealth();
-        double playerMana = 0.5;
+        double playerMana = (player.getMana()+0.0) / player.getMaxMana();
 
         int width = this.getWidth();
         int height = this.getHeight();

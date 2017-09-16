@@ -20,6 +20,7 @@ public class Player extends Character {
 	private Image currentTexture;
 	private long lastShotTime;
 	private double shootRate = 0.01;
+	private double manaPool;
 
 	private double textureChangeRate = 0.005;
 	private double textureChangeTime;
@@ -41,6 +42,7 @@ public class Player extends Character {
 		this.lastShotTime = 0;
 		this.textureChangeTime = System.currentTimeMillis();
 		this.defaultAABB = aabb;
+		this.manaPool = 100;
 
 		Vector crawlingCenter = new Vector(defaultAABB.center.x, defaultAABB.center.y + (defaultAABB.get_size().y*0.25));
 		Vector crawlingSize = new Vector(defaultAABB.get_size().x, defaultAABB.get_size().y*0.25);
@@ -60,6 +62,11 @@ public class Player extends Character {
 			this.getLevel().addEntity(bullet);
 		}
 	}
+
+	public double getMana(){ return this.manaPool; }
+	public void takeMana(double cost) {	this.manaPool = cost > this.manaPool ? 0 : this.manaPool - cost; }
+	private void addMana(double replenish) {this.manaPool = replenish+this.manaPool > this.getMaxMana() ? 100 : this.manaPool + replenish; }
+	public double getMaxMana(){ return 100; }
 
 	public void moveLeft() {
 		this.setMovement(Movement.MOVE_LEFT);
@@ -117,7 +124,7 @@ public class Player extends Character {
 				this.setAABB(new AABB(newCenter, defaultAABB.extents, currentAABB.velocity, currentAABB.acceleration));
 			}
 		}
-
+		this.addMana(dt * 2);
 		if (System.currentTimeMillis()-textureChangeTime > (1.0/textureChangeRate)) {
 			swapTexture();
 			textureChangeTime = System.currentTimeMillis();

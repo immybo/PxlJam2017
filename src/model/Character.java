@@ -94,10 +94,10 @@ public abstract class Character extends AbstractEntity {
 	public int getMaxHealth(){ return 100;}
 	public boolean legBroken(){ return effects.contains(StatusEffect.BROKEN_LEG); }
 
-	public void damage(double damage) {
-		if (!effects.contains(StatusEffect.FROZEN))
+	public void damage(double damage){
+		if(!effects.contains(StatusEffect.FROZEN))
 			this.health -= damage;
-	}
+		}
 
 	public abstract int getMovementSpeed();
 }

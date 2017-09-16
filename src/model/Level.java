@@ -9,22 +9,22 @@ import controller.ControllerListener;
 
 
 public class Level {
-	private Player player;
-	private List<Entity> entities;
-	private List<Entity> entitiesToAdd;
-	private List<Entity> entitiesToRemove;
+	protected Player player;
+	protected List<Entity> entities;
+	protected List<Entity> entitiesToAdd;
+	protected List<Entity> entitiesToRemove;
 	private ControllerListener controllerListener;
+	public File levelFile;
+	Vector min;
+	Vector max;
 
-	public Level(List<Entity> entities) {
-		for (Entity e : entities) {
-			if (e instanceof Player) {
-				this.player = (Player)e;
-				break;
-			}
-		}
-		this.entities = entities;
+	public Level(File levelFile) {
+		this.levelFile = levelFile;
+		this.entities = new ArrayList<Entity>();
 		this.entitiesToAdd = new ArrayList<Entity>();
 		this.entitiesToRemove = new ArrayList<Entity>();
+		this.min = Vector.zero();
+		this.max = Vector.zero();
 	}
 
 	public void setControllerListener(ControllerListener listener) {
@@ -33,6 +33,15 @@ public class Level {
 
 	public void addEntity(Entity newEntity) {
 		entitiesToAdd.add(newEntity);
+		if(newEntity.getAABB().min().x < min.x)
+			min = new Vector(newEntity.getAABB().min().x, min.y);
+		if(newEntity.getAABB().min().y < min.y)
+			min = new Vector(min.x, newEntity.getAABB().min().y);
+		if(newEntity.getAABB().max().x > max.x)
+			max = new Vector(newEntity.getAABB().max().x, max.y);
+		if(newEntity.getAABB().max().y > max.y)
+			max = new Vector(max.x, newEntity.getAABB().max().y);
+		System.out.println(min.x+" "+min.y+" "+max.x+" "+max.y);
 	}
 
 	public void removeEntity(Entity entity) {
@@ -59,6 +68,12 @@ public class Level {
 			}
 		}
 
+		// Did we finish level?
+		if (this.getPlayer().getAABB().center.x >= this.max.x - 100) {
+			controllerListener.onLevelFinish();
+			return;
+		}
+
 		for (Entity e : entitiesToAdd) {
 			entities.add(e);
 		}
@@ -71,8 +86,7 @@ public class Level {
 		this.getPlayer().setOnGround(false);
 
 		if (this.getPlayer().getJumpNextTick()) {
-			double jumpForce = this.getPlayer().legBroken() ? -Player.JUMP_FORCE*1.5 : -Player.JUMP_FORCE;
-			this.getPlayer().applyForce(new Vector(0, jumpForce));
+			this.getPlayer().applyForce(new Vector(0, -Player.JUMP_FORCE));
 			this.getPlayer().setJumpNextTick(false);
 		}
 
@@ -92,8 +106,10 @@ public class Level {
 						}
 						else if(ent instanceof Enemy && ((Bullet) e).friendler){
 							((Character)ent).damage(((Bullet) e).getDamage());
+							((Character)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}
+
 					}
 				}
 			}
@@ -157,8 +173,7 @@ public class Level {
 	}
 
 	public static Level buildLevel(File file){
-		ArrayList entities = new ArrayList();
-		Level level = new Level(entities);
+		Level level = new Level(file);
 		try {
 			Scanner reader = new Scanner(file);
 			String levelName = reader.next();
@@ -168,7 +183,7 @@ public class Level {
 				if (att.equals("PLAYER-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					Player player = new Player(new AABB(spawn, new Vector(15,25).mult(1.5), null, null), 0, level);
-					entities.add((player));
+					level.addEntity((player));
 					level.setPlayer(player);
 					reader.nextLine();
 				}
@@ -193,37 +208,37 @@ public class Level {
 						double bounciness = 1.0;
 						int depth = 0;
 						Wall wall = new Wall(new AABB(point, extents, null, null), Textures.DIRT, bounciness, depth, level);
-						entities.add(wall);
+						level.addEntity(wall);
 					}
 				}
 				else if (att.equals("FREEZEBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(15,25), null, null), 0, 100, level);
-					entities.add(freezeBoy);
+					level.addEntity(freezeBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("BURNBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					BurnBoy burnBoy= new BurnBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
-					entities.add(burnBoy);
+					level.addEntity(burnBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("SPIKEBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					SpikeBoy spikeBoy= new SpikeBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
-					entities.add(spikeBoy);
+					level.addEntity(spikeBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("SQUISHBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(25,25).mult(10), null, null), 0, 100, level);
-					entities.add(squishBoy);
+					level.addEntity(squishBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("POISSONBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					PoissonBoy squishBoy= new PoissonBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
-					entities.add(squishBoy);
+					level.addEntity(squishBoy);
 					reader.nextLine();
 				}
 			}
@@ -233,5 +248,9 @@ public class Level {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public Level restart() {
+		return Level.buildLevel(levelFile);
 	}
 }

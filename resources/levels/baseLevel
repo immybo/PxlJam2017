@@ -1,0 +1,4 @@
+BASELEVEL{
+PLAYER-SPAWN:  0 0 ;
+WALL:  0 0 - 50 50 ;
+}

@@ -88,6 +88,7 @@ public class HudPanel extends JPanel {
         // Outline
         g.setColor(Color.BLACK);
         g.drawOval(MARGIN, MARGIN, healthPoolSize, healthPoolSize);
+        g.drawImage(this.poolBorder, MARGIN-26, -6, healthPoolSize + 53, healthPoolSize + 53, null);
 
         // Icons for current blessings
         int numBlessings = 7;
@@ -109,14 +110,13 @@ public class HudPanel extends JPanel {
 
         g.setColor(Color.BLACK);
         g.drawOval(width-MARGIN-healthPoolSize, MARGIN, healthPoolSize, healthPoolSize);
-        g.drawImage(this.poolBorder, MARGIN-26, -6, healthPoolSize + 53, healthPoolSize + 53, null);
+        g.drawImage(this.poolBorder, width-MARGIN-healthPoolSize - 26, -6, healthPoolSize + 53, healthPoolSize + 53, null);
     }
 
     private void drawBlessing(Graphics g, int width, int height, int numBlessings, int i, StatusEffect blessing) {
         Image image = player.getEffects().contains(blessing) ? statusImageOn.get(blessing) : statusImageOff.get(blessing);
         int size = height/2;
         int left = (int)(width/2 - (numBlessings+0.0)/2 * size);
-
         g.drawImage(image, i * size + left, (height-size)/2, size, size, null);
     }
 }

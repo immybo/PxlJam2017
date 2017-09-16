@@ -21,6 +21,7 @@ public class GameEventListener {
 	}
 	public void onLeftReleased() { level.getPlayer().stopLeftMovement();}
 	public void onRightReleased() { level.getPlayer().stopRightMovement();}
+	public void onMousePress() { level.getPlayer().shoot(); }
 
 	public void setLevel(Level level) {
 		this.level = level;

@@ -16,7 +16,8 @@ public class Player extends Character {
 	private boolean jumpNextTick;
 	private Image texture;
 	private HashMap<StatusEffect, Long> statusTimeouts;
-
+	private long lastShotTime;
+	private double shootRate = 0.001;
 	private Movement movement;
 
 	private enum Movement {
@@ -35,6 +36,7 @@ public class Player extends Character {
 		this.jumpNextTick = false;
 		this.texture = texture;
 		this.statusTimeouts = new HashMap<StatusEffect, Long>();
+		this.lastShotTime = 0;
 		for(StatusEffect s : StatusEffect.values()){
 			this.statusTimeouts.put(s, new Long(0));
 		}
@@ -59,6 +61,16 @@ public class Player extends Character {
 
 	public List<StatusEffect> getEffects() {
 		return effects;
+	}
+
+	public void shoot(){
+		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
+			//pewpew
+			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
+
+				Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, new Vector(10, 0), true, StatusEffect.NONE);
+				this.getLevel().addEntity(bullet);
+		}
 	}
 
 	public void moveLeft() {

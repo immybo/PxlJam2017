@@ -7,5 +7,6 @@ public enum StatusEffect {
     FLATTENED,
     FROZEN,
     ON_FIRE,
-    SPIKY
+    SPIKY,
+    NONE
 }

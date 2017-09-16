@@ -5,22 +5,25 @@ import model.Level;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 public class GameFrame extends JFrame {
     public final static char MOVE_RIGHT_KEY = 'd';
     public final static char MOVE_LEFT_KEY = 'a';
     public final static char JUMP_KEY = ' ';
+    public final static char RESTART_KEY = 'r';
 
     private GameEventListener listener;
 
-    public GameFrame(Level level, GameEventListener listener) {
+    private String levelPath;
+    private Level level;
+
+    public GameFrame(String levelPath, GameEventListener listener) {
         super();
-        this.add(new GamePanel(level, listener));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
-        this.setVisible(true);
 
         this.listener = listener;
+        this.levelPath = levelPath;
+        restart();
 
         this.addKeyListener(new KeyListener(){
 
@@ -36,6 +39,9 @@ public class GameFrame extends JFrame {
                         break;
                     case JUMP_KEY:
                         listener.onJumpPressed();
+                        break;
+                    case RESTART_KEY:
+                        restart();
                         break;
                 }
             }
@@ -57,5 +63,26 @@ public class GameFrame extends JFrame {
                 }
             }
         });
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void restart() {
+        Level level = Level.buildLevel(new File(levelPath));
+        setLevel(level);
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+        this.listener.setLevel(level);
+        this.getContentPane().removeAll();
+        this.revalidate();
+        this.repaint();
+        this.add(new GamePanel(level, listener));
+        this.pack();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 }

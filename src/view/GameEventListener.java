@@ -2,11 +2,12 @@ package view;
 
 import model.Level;
 
+import java.io.File;
+
 public class GameEventListener {
 	private Level level;
 	
-	public GameEventListener(Level level) {
-		this.level = level;
+	public GameEventListener() {
 	}
 	
 	public void onLeftPressed() {
@@ -20,4 +21,8 @@ public class GameEventListener {
 	}
 	public void onLeftReleased() { level.getPlayer().stopLeftMovement();}
 	public void onRightReleased() { level.getPlayer().stopRightMovement();}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
 }

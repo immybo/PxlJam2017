@@ -22,12 +22,11 @@ public class Main {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
-		    	//Level level = new Level(entities);
-				Level level = Level.buildLevel(new File("resources/levels/testLevel"));
-				GameFrame gf = new GameFrame(level, new GameEventListener(level));
+				GameFrame gf = new GameFrame("resources/levels/testLevel", new GameEventListener());
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {
+						Level level = gf.getLevel();
 		    			level.tick(((float)delay)/1000f);
 		    			gf.repaint();
 		    		}

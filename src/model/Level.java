@@ -117,9 +117,6 @@ public class Level {
 			}
 		}
 	}
-	public void restart() {
-		throw new Error("not implemented");
-	}
 	
 	public List<Entity> getEntities() {
 		return entities;

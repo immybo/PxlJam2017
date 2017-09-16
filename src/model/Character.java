@@ -78,7 +78,10 @@ public abstract class Character extends AbstractEntity {
 			this.setVelocity(new Vector(vel.x*1.5, vel.y));
 			this.damage(dt * 10);
 		}
-		
+		if(effects.contains(StatusEffect.BROKEN_LEG)) {
+			Vector vel = this.getVelocity();
+			this.setVelocity(new Vector(vel.x*0.5, vel.y));
+		}
 		for(StatusEffect s : StatusEffect.values()){
 			if(this.statusTimeouts.get(s) <= System.currentTimeMillis()) {
 				this.removeStatusEffect(s);
@@ -89,6 +92,7 @@ public abstract class Character extends AbstractEntity {
 
 	public double getHealth(){ return health; }
 	public int getMaxHealth(){ return 100;}
+	public boolean legBroken(){ return effects.contains(StatusEffect.BROKEN_LEG); }
 
 	public void damage(double damage) {
 		if (!effects.contains(StatusEffect.FROZEN))

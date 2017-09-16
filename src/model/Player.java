@@ -50,10 +50,9 @@ public class Player extends Character {
 
 	public void shoot(boolean isRight){
 		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
-			//pewpew
-			Vector vector = isRight ? new Vector(10,0) : new Vector(-10,0);
+			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);
 			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
-			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, vector, true, StatusEffect.NONE);
+			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, StatusEffect.NONE);
 			this.getLevel().addEntity(bullet);
 		}
 	}

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class LevelPanel extends JPanel {
-    private static final Color backgroundColor = Color.BLUE;
+    private static final Color backgroundColor = Color.DARK_GRAY;
 
     private final Level level;
 

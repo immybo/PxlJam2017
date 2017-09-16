@@ -106,7 +106,7 @@ public class Level {
 						}
 						else if(ent instanceof Enemy && ((Bullet) e).friendler){
 							((Character)ent).damage(((Bullet) e).getDamage());
-							((Player)ent).addStatusEffect(((Bullet) e).effect);
+							((Character)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}
 

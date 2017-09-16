@@ -98,7 +98,12 @@ public class Player extends AbstractEntity implements Character {
 	public void tick(double dt){
 		double ySpeed = this.getVelocity().y;
 		double xSpeed;
-		if(this.movement == Movement.MOVE_RIGHT)
+		if (effects.contains(StatusEffect.BUBBLE))
+			xSpeed = 0;
+		else if (effects.contains(StatusEffect.FROZEN))
+			// Retain the same speed
+			xSpeed = this.getVelocity().x;
+		else if(this.movement == Movement.MOVE_RIGHT)
 			xSpeed = this.MOVEMENT_SPEED * dt;
 		else if(this.movement == Movement.MOVE_LEFT)
 			xSpeed = -this.MOVEMENT_SPEED * dt;

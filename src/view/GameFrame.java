@@ -90,6 +90,8 @@ public class GameFrame extends JFrame implements ControllerListener {
 
     @Override
     public void onPlayerDeath() {
-        restart();
+        int res = JOptionPane.showConfirmDialog(null, "You are dead.");
+        if (res == JOptionPane.YES_OPTION) restart();
+        else getLevel().getPlayer().damage(-100);
     }
 }

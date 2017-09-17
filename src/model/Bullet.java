@@ -10,6 +10,7 @@ public class Bullet extends AbstractEntity {
 
     public Bullet(AABB aabb, int depth, double mass, Level level, int damage, Vector velocity, boolean friendler, StatusEffect effect) {
         super(aabb, depth, mass, level);
+        super.getAABB().extents = new Vector(5,5);
         this.damage = damage;
         this.setVelocity(velocity);
         this.friendler = friendler;

@@ -23,9 +23,9 @@ public class Main {
 			//"resources/levels/aLevelOfSorts",
 			//"resources/levels/breakLeg.txt",
 			//"resources/levels/squish.txt",
-			//"resources/levels/fire.txt", TODO
+			"resources/levels/fire.txt", //TODO
 			//"resources/levels/bubble.txt",
-			"resources/levels/freeze.txt",
+			//"resources/levels/freeze.txt",
 			//"resources/level/poison.txt", JOSH
 			
 	};

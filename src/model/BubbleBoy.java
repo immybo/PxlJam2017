@@ -28,7 +28,7 @@ public class BubbleBoy extends Enemy {
         AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
         this.shootTimer += dt;
         if(this.shootTimer >= 10) {
-            Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 0, new Vector(-5, -0.1), false, StatusEffect.BUBBLE);
+            Bullet bullet = new Bullet(bulletAABB, new Color(0x5555FF), 0, 0, this.getLevel(), 0, new Vector(-5, -0.1), false, StatusEffect.BUBBLE);
             this.getLevel().addEntity(bullet);
             this.shootTimer = 0;
             super.shoot(dt);

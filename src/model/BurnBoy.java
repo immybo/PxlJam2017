@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 /**
  * Created by Karametua on 16/09/2017.
@@ -32,7 +32,7 @@ public class BurnBoy extends Enemy {
         AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
         this.shootTimer += dt;
         if(this.shootTimer >= 1) {
-            Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 50, new Vector(-10, 0), false, StatusEffect.ON_FIRE);
+            Bullet bullet = new Bullet(bulletAABB, new Color(0xFF8800),0, 0, this.getLevel(), 50, new Vector(-10, 0), false, StatusEffect.ON_FIRE);
             this.getLevel().addEntity(bullet);
             this.shootTimer = 0;
             super.shoot(dt);

@@ -271,7 +271,6 @@ public class Level {
 					double xtrigger = Double.parseDouble(reader.next());
 					double length = Double.parseDouble(reader.next());
 					level.addEntity(new DialogBoy(xtrigger, length, reader.nextLine(), level));
-					reader.nextLine();
 				}
 			}
 			reader.close();

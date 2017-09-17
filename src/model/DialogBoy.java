@@ -18,20 +18,21 @@ public class DialogBoy extends Character {
 		this.text = string;
 		this.trigger = trigger;
 		this.length = length;
+		System.out.println(text);
 		
 	}
 	
 	public void tick(double dt) {
 		//super.tick(dt);
 		timer += dt;
-		if(timestart == 0 && getLevel().getPlayer().getAABB().center.x > trigger) {
+		if(timestart == 0 && getLevel().getPlayer().getAABB().center.x >= trigger) {
 			timestart = timer;
 			if(currentBoy != null) {
 				getLevel().removeEntity(currentBoy);
 			}
 			currentBoy = this;
 		}
-		if(timestart + length < timer) {
+		if(timestart !=  0 && timestart + length < timer) {
 			getLevel().removeEntity(this);
 		}
 	}

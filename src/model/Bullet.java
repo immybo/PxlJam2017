@@ -6,16 +6,16 @@ public class Bullet extends AbstractEntity {
     private final int damage;
     public final boolean friendler;
     public final StatusEffect effect;
-    private Image texture;
+    private Color color;
 
-    public Bullet(AABB aabb, int depth, double mass, Level level, int damage, Vector velocity, boolean friendler, StatusEffect effect) {
+    public Bullet(AABB aabb, Color color, int depth, double mass, Level level, int damage, Vector velocity, boolean friendler, StatusEffect effect) {
         super(aabb, depth, mass, level);
         super.getAABB().extents = new Vector(5,5);
         this.damage = damage;
         this.setVelocity(velocity);
         this.friendler = friendler;
         this.effect = effect;
-        this.texture = Textures.BULLET;
+        this.color = color;
     }
 
     public int getDamage() {
@@ -31,7 +31,8 @@ public class Bullet extends AbstractEntity {
     public void render(Graphics g) {
         Vector min = getAABB().min();
         Vector ext = getAABB().extents;
-        g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
+        g.setColor(color);
+        g.fillOval((int)min.x, (int)min.y, (int)(2*ext.x), (int)(2*ext.y));
     }
 
     @Override

@@ -23,13 +23,15 @@ public class BubbleBoy extends Enemy {
         super.render(g);
     }
 
-    private void shoot(double dt) {
+    @Override
+    public void shoot(double dt) {
         AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
         this.shootTimer += dt;
         if(this.shootTimer >= 10) {
             Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 0, new Vector(-5, -0.1), false, StatusEffect.BUBBLE);
             this.getLevel().addEntity(bullet);
             this.shootTimer = 0;
+            super.shoot(dt);
         }
     }
 }

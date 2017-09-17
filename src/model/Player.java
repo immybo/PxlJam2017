@@ -57,7 +57,7 @@ public class Player extends Character {
 	}
 
 	public void shoot(boolean isRight){
-		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate && !this.getEffects().contains(StatusEffect.FROZEN)) {
+		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate && !this.getEffects().contains(StatusEffect.FROZEN) && this.manaPool > 0) {
 			StatusEffect statusEffect = StatusEffect.NONE;
 			if(this.getEffects().contains(StatusEffect.POISONED)) statusEffect = StatusEffect.DOT;
 			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);
@@ -65,6 +65,7 @@ public class Player extends Character {
 			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, statusEffect);
 			this.getLevel().addEntity(bullet);
 			SoundPlayer.playSound("resources/gun.wav");
+			this.takeMana(0.7);
 		}
 	}
 
@@ -130,7 +131,7 @@ public class Player extends Character {
 			}
 		}
 		
-		this.addMana(dt * 2);
+		this.addMana(dt * 1);
 		if (System.currentTimeMillis()-textureChangeTime > (1.0/textureChangeRate)) {
 			swapTexture();
 			textureChangeTime = System.currentTimeMillis();

@@ -82,6 +82,9 @@ public abstract class Character extends AbstractEntity {
 			Vector vel = this.getVelocity();
 			this.setVelocity(new Vector(vel.x*0.5, vel.y));
 		}
+		if(effects.contains(StatusEffect.DOT)) {
+			this.damage(5 * dt);
+		}
 		for(StatusEffect s : StatusEffect.values()){
 			if(this.statusTimeouts.get(s) <= System.currentTimeMillis()) {
 				this.removeStatusEffect(s);

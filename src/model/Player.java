@@ -58,9 +58,11 @@ public class Player extends Character {
 
 	public void shoot(boolean isRight){
 		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
+			StatusEffect statusEffect = StatusEffect.NONE;
+			if(this.getEffects().contains(StatusEffect.POISONED)) statusEffect = StatusEffect.DOT;
 			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);
 			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
-			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, StatusEffect.NONE);
+			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, statusEffect);
 			this.getLevel().addEntity(bullet);
 			SoundPlayer.playSound("resources/gun.wav");
 		}

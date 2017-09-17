@@ -15,6 +15,19 @@ public abstract class Character extends AbstractEntity {
 		STATIONARY
 	};
 
+    public static final HashMap<StatusEffect, Long> effectLength = new HashMap<StatusEffect, Long>(){{
+    	put(StatusEffect.POISONED, (long) 5000);
+		put(StatusEffect.BROKEN_LEG,(long)100000000);
+		put(StatusEffect.BUBBLE, (long) 2000);
+		put(StatusEffect.FLATTENED, (long) 5000);
+		put(StatusEffect.FROZEN, (long) 3000);
+		put(StatusEffect.SPIKY, (long) 10000);
+		put(StatusEffect.ON_FIRE, (long) 8000);
+		put(StatusEffect.DOT, (long) 3000);
+		put(StatusEffect.NONE, (long) 0);
+
+	}};
+
 	private double health;
 	private HashMap<StatusEffect, Long> statusTimeouts;
 	private List<StatusEffect> effects;
@@ -42,7 +55,7 @@ public abstract class Character extends AbstractEntity {
 		if (!effects.contains(effect)) {
 			effects.add(effect);
 		}
-		this.statusTimeouts.put(effect, System.currentTimeMillis() + 3000);
+		this.statusTimeouts.put(effect, System.currentTimeMillis() + effectLength.get(effect));
 	}
 
 	public void removeStatusEffect(StatusEffect effect) {
@@ -83,7 +96,7 @@ public abstract class Character extends AbstractEntity {
 		if(effects.contains(StatusEffect.ON_FIRE)) {
 			Vector vel = this.getVelocity();
 			this.setVelocity(new Vector(vel.x*1.5, vel.y));
-			this.damage(dt * 10);
+			this.damage(dt * 2.5);
 		}
 		if(effects.contains(StatusEffect.BROKEN_LEG)) {
 			Vector vel = this.getVelocity();
@@ -121,6 +134,7 @@ public abstract class Character extends AbstractEntity {
 	public void damage(double damage){
 		if(!effects.contains(StatusEffect.FROZEN))
 			this.health -= damage;
+		if(this.health <0) this.health = 0;
 	}
 
 	public abstract int getMovementSpeed();

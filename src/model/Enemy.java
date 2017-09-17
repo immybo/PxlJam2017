@@ -1,5 +1,7 @@
 package model;
 
+import controller.SoundPlayer;
+
 import java.awt.*;
 
 public abstract class Enemy extends Character {
@@ -22,5 +24,9 @@ public abstract class Enemy extends Character {
         g.fillRect((int)this.getAABB().min().x, (int)this.getAABB().min().y - 50, (int)(this.getAABB().get_size().x*healthBarFull), 20);
         g.setColor(Color.BLACK);
         g.drawRect((int)this.getAABB().min().x, (int)this.getAABB().min().y - 50, (int)this.getAABB().get_size().x, 20);
+    }
+
+    public void shoot(double dt){
+        SoundPlayer.playSound("resources/pew.wav");
     }
 }

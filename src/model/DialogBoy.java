@@ -5,26 +5,34 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 public class DialogBoy extends Character {
-
+	private static DialogBoy currentBoy = null;
+	
 	private String text;
 	private double trigger;
 	private double timer = 0;
 	private double timestart = 0;
+	private double length;
 
-	public DialogBoy(double trigger, String string, Level level) {
+	public DialogBoy(double trigger, double length, String string, Level level) {
 		super(new AABB(new Vector(0,0), new Vector(0,0), null, null), -1, 0, level);
 		this.text = string;
 		this.trigger = trigger;
+		this.length = length;
+		System.out.println(text);
 		
 	}
 	
 	public void tick(double dt) {
 		//super.tick(dt);
 		timer += dt;
-		if(timestart == 0 && getLevel().getPlayer().getAABB().center.x > trigger) {
+		if(timestart == 0 && getLevel().getPlayer().getAABB().center.x >= trigger) {
 			timestart = timer;
+			if(currentBoy != null) {
+				getLevel().removeEntity(currentBoy);
+			}
+			currentBoy = this;
 		}
-		if(timestart + 3 < timer) {
+		if(timestart !=  0 && timestart + length < timer) {
 			getLevel().removeEntity(this);
 		}
 	}
@@ -35,10 +43,20 @@ public class DialogBoy extends Character {
 			return;
 		}
 		
-		double x = getLevel().getPlayer().getAABB().center.x;
-		double y = getLevel().getPlayer().getAABB().min().y;
+		int sheight = 18;
+		
+		g.setFont(new Font("Helvetica", Font.BOLD, sheight));
+		
+		double swidth = g.getFontMetrics().stringWidth(text);
+		double cx =getLevel().getPlayer().getAABB().center.x;
+		double x = cx - swidth/2;
+		double y = getLevel().getPlayer().getAABB().min().y - 30;
+
+		g.setColor(Color.black);
+		g.fillRect((int) cx, (int) y + 20, 4, 4);
+		g.fillRect((int) cx + 10, (int) y + 10, 6, 6);
+		g.fillRect((int) x, (int) y - sheight, (int) swidth + 4, (int) sheight + 6);
 		g.setColor(Color.white);
-		g.setFont(new Font("Helvetica", Font.BOLD, 18));
 		g.drawString(text, (int) x, (int) y);
 	}
 	

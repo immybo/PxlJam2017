@@ -20,10 +20,13 @@ import javax.swing.Timer;
 
 public class Main {
 	public static final String[] LEVELS = {
-			"resources/levels/aLevelOfSorts",
-			"resources/levels/breakLeg.txt",
-			"resources/levels/squish.txt",
-			"resources/levels/bubble.txt"
+			//"resources/levels/aLevelOfSorts",
+			//"resources/levels/breakLeg.txt",
+			//"resources/levels/squish.txt",
+			//"resources/levels/fire.txt", TODO
+			//"resources/levels/bubble.txt",
+			"resources/levels/freeze.txt",
+			//"resources/level/poison.txt", JOSH
 			
 	};
 

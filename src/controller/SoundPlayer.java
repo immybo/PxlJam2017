@@ -27,6 +27,7 @@ public class SoundPlayer {
         }
         final Media media = new Media(soundFile.toString());
         mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
 

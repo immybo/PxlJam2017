@@ -121,6 +121,7 @@ public abstract class Character extends AbstractEntity {
 	public void damage(double damage){
 		if(!effects.contains(StatusEffect.FROZEN))
 			this.health -= damage;
+		if(this.health <0) this.health = 0;
 	}
 
 	public abstract int getMovementSpeed();

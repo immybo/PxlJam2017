@@ -146,6 +146,7 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public void restart() {
+        this.listener.setLevel(null);
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();

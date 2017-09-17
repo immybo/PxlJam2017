@@ -94,9 +94,6 @@ public class GameFrame extends JFrame implements ControllerListener {
                     case JUMP_KEY:
                         listener.onJumpPressed();
                         break;
-                    case RESTART_KEY:
-                        restart();
-                        break;
                     case POWER_1:
                         listener.onPower1();
                         break;
@@ -146,7 +143,7 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public void restart() {
-        this.listener.setLevel(null);
+        this.isRestarting = true;
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
@@ -156,21 +153,25 @@ public class GameFrame extends JFrame implements ControllerListener {
             public void actionPerformed(ActionEvent e) {
                 setLevel(levelIndex);
                 pack();
+                isRestarting = false;
             }
         };
         showOverlayMessage("Level " + levelIndex, Color.WHITE, 2000, startLevelAction);
     }
 
     public void setLevel(int newIndex) {
+        this.levelIndex = newIndex;
         levels[levelIndex] = levels[levelIndex].restart();
         add(new GamePanel(levels[levelIndex], listener));
-        this.levelIndex = newIndex;
         levels[levelIndex].setControllerListener(this);
         this.listener.setLevel(levels[levelIndex]);
     }
 
+    public boolean isRestarting = true;
+
     @Override
     public void onPlayerDeath() {
+        this.isRestarting = true;
         this.getLevel().getPlayer().damage(-100000000); // HACKETY HACK :)
         this.getContentPane().removeAll();
         this.revalidate();

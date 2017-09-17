@@ -20,11 +20,14 @@ import javax.swing.Timer;
 
 public class Main {
 	public static final String[] LEVELS = {
-			"resources/levels/aLevelOfSorts",
-			"resources/levels/breakLeg.txt",
-			"resources/levels/squish.txt",
-			"resources/levels/bubble.txt"
-			
+
+			//"resources/levels/aLevelOfSorts",
+			//"resources/levels/breakLeg.txt",
+			//"resources/levels/squish.txt",
+			//"resources/levels/fire.txt", TODO
+			//"resources/levels/bubble.txt",
+			"resources/levels/freeze.txt",
+			//"resources/level/poison.txt", JOSH
 	};
 
 	public static void main(String[] args) {
@@ -39,9 +42,14 @@ public class Main {
 		    	int delay = 16;
 		    	ActionListener taskPerformer = new ActionListener() {
 		    		public void actionPerformed(ActionEvent evt) {
+		    			if (gf.isRestarting) return;
 						Level level = gf.getLevel();
 						level.tick(((float)delay)/1000f);
 		    			gf.repaint();
+
+		    			if (level.getPlayer().getAABB().center.y > 5000) {
+		    				gf.onPlayerDeath();
+						}
 		    		}
 			  };
 			  new Timer(delay, taskPerformer).start();

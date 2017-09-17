@@ -32,7 +32,10 @@ public class SquishBoy extends Enemy{
 
 	public void collide(Entity o) {
 		if(o instanceof Character) {
-			((Character) o).addStatusEffect(StatusEffect.FLATTENED);
+			Character c = ((Character) o);
+			if(!c.getEffects().contains(StatusEffect.FLATTENED))
+				c.damage(10);
+			c.addStatusEffect(StatusEffect.FLATTENED);
 		}
 	}
 }

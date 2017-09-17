@@ -150,8 +150,9 @@ public class Level {
 							}
 
 							double newY = e.getAABB().center.y;
-							
+
 							e.collide(o);
+							o.collide(e);
 
 							if (e instanceof Player) {
 								if (velY > 0 && oldY > newY) {
@@ -201,7 +202,7 @@ public class Level {
 				att = reader.next();
 				if (att.equals("PLAYER-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					Player player = new Player(new AABB(spawn, new Vector(15,25).mult(1.5), null, null), 0, level);
+					Player player = new Player(new AABB(spawn, new Vector(59,128).mult(0.4), null, null), 0, level);
 					level.addEntity((player));
 					level.setPlayer(player);
 					reader.nextLine();
@@ -264,6 +265,11 @@ public class Level {
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
 					BubbleBoy bubbleBoy= new BubbleBoy(new AABB(spawn, new Vector(58,128).mult(0.4), null, null), 0, 100, level);
 					level.addEntity(bubbleBoy);
+					reader.nextLine();
+				}
+				else if (att.equals("DIALOGBOY-SPAWN:")){
+					double xtrigger = Double.parseDouble(reader.next());
+					level.addEntity(new DialogBoy(xtrigger, reader.nextLine(), level));
 					reader.nextLine();
 				}
 			}

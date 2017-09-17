@@ -160,9 +160,9 @@ public class GameFrame extends JFrame implements ControllerListener {
     }
 
     public void setLevel(int newIndex) {
-        this.levelIndex = newIndex;
         levels[levelIndex] = levels[levelIndex].restart();
         add(new GamePanel(levels[levelIndex], listener));
+        this.levelIndex = newIndex;
         levels[levelIndex].setControllerListener(this);
         this.listener.setLevel(levels[levelIndex]);
     }

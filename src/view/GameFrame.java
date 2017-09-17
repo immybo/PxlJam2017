@@ -1,6 +1,7 @@
 package view;
 
 import controller.ControllerListener;
+import controller.SoundPlayer;
 import model.Level;
 
 import javax.swing.*;
@@ -173,6 +174,7 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
+        SoundPlayer.playSound("resources/lose.wav");
         showOverlayMessage("You died; RIP.", Color.WHITE, 2000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -184,6 +186,7 @@ public class GameFrame extends JFrame implements ControllerListener {
     @Override
     public void onLevelFinish() {
         levelIndex++;
+        SoundPlayer.playSound("resources/win.wav");
 
         if (levelIndex == levels.length) {
             JOptionPane.showMessageDialog(this, "You've finished all the levels. Click OK to start again.");

@@ -55,6 +55,13 @@ public abstract class Character extends AbstractEntity {
 		return effects;
 	}
 	
+	private boolean flat = false;
+
+	public void setAABB(AABB newAABB) {
+		this.flat = false;
+		super.setAABB(newAABB);
+	}
+	
 	@Override
 	public void tick(double dt) {
 		double ySpeed = this.getVelocity().y;
@@ -87,6 +94,17 @@ public abstract class Character extends AbstractEntity {
 				this.removeStatusEffect(s);
 			}
 		}
+		
+		if(this.getEffects().contains(StatusEffect.FLATTENED) && !this.flat) {
+			this.flat = true;
+			Vector ext = this.getAABB().extents;
+			this.getAABB().extents = new Vector(ext.x, ext.y/2);
+		} else if(!this.getEffects().contains(StatusEffect.FLATTENED) && this.flat) {
+			this.flat = false;
+			Vector ext = this.getAABB().extents;
+			this.getAABB().extents = new Vector(ext.x, ext.y*2);
+		}
+		
 		super.tick(dt);
 	}
 

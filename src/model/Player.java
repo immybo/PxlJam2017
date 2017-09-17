@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Player extends Character {
-	public static final int JUMP_FORCE = 100;
+	public static final int JUMP_FORCE = 130;
 	private static final int MOVEMENT_SPEED = 500;
 	private boolean onGround;
 	private boolean jumpNextTick;
@@ -127,6 +127,7 @@ public class Player extends Character {
 				this.setAABB(new AABB(newCenter, defaultAABB.extents, currentAABB.velocity, currentAABB.acceleration));
 			}
 		}
+		
 		this.addMana(dt * 2);
 		if (System.currentTimeMillis()-textureChangeTime > (1.0/textureChangeRate)) {
 			swapTexture();
@@ -199,6 +200,7 @@ public class Player extends Character {
 	public void collide(Entity o) {
 		if(o instanceof SquishBoy) {
 			System.out.println("squish");
+			this.addStatusEffect(StatusEffect.FLATTENED);
 		}
 	}
 

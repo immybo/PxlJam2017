@@ -28,4 +28,10 @@ public class SquishBoy extends Enemy{
         jump(dt);
         super.tick(dt);
     }
+
+	public void collide(Entity o) {
+		if(o instanceof Character) {
+			((Character) o).addStatusEffect(StatusEffect.FLATTENED);
+		}
+	}
 }

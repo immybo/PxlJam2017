@@ -4,7 +4,7 @@ PLAYER-SPAWN:  400 450 ;
 DIALOGBOY-SPAWN: 400 3.0 A&D = move
 DIALOGBOY-SPAWN: 1400 3.0 Space = jump
 DIALOGBOY-SPAWN: 2400 3.0 Click = shoot
-DIALOGBOY-SPAWN: 3400 3.0 I am really tired.
+DIALOGBOY-SPAWN: 3400 3.0 I am really tired..
 
 WALL:  0 500 - 5000 1000
        0 0 - 100 1100 ;

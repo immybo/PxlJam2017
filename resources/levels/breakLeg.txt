@@ -1,7 +1,11 @@
 level1{
 PLAYER-SPAWN:  400 450 ;
-WALL:  0 500 - 5000 1000
+DIALOGBOY-SPAWN: 2500 3.0 Oh look a cliff
+DIALOGBOY-SPAWN: 3500 3.0 I've fallen and I can't waddup..
+DIALOGBOY-SPAWN: 4500 3.0 this pain.. it makes me want to jump higher
+DIALOGBOY-SPAWN: 7500 3.0 Well that was easy
+WALL:  0 500 - 3000 1000
        0 0 - 100 1100
-       5000 700 - 6000 1000
-       6000 550 - 7000 1000 ;
+       3000 800 - 6000 1000
+       6000 550 - 8500 1000 ;
 }

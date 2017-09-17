@@ -230,7 +230,7 @@ public class Player extends Character {
 	public void collide(Entity o) {
 		if(o instanceof SpikeBoy) {
 			this.addStatusEffect(StatusEffect.SPIKY);
-			this.damage(20);
+			this.damage(80);
 		}
 	}
 

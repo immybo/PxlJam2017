@@ -68,7 +68,7 @@ public class Player extends Character {
 
 	public double getMana(){ return this.manaPool; }
 	public void takeMana(double cost) {	this.manaPool = cost > this.manaPool ? 0 : this.manaPool - cost; }
-	private void addMana(double replenish) {this.manaPool = replenish+this.manaPool > this.getMaxMana() ? 100 : this.manaPool + replenish; }
+	private void addMana(double replenish) {this.manaPool = replenish+this.manaPool > this.getMaxMana() ? this.getMaxMana() : this.manaPool + replenish; }
 	public double getMaxMana(){ return 100; }
 
 	public void moveLeft() {
@@ -132,7 +132,7 @@ public class Player extends Character {
 			swapTexture();
 			textureChangeTime = System.currentTimeMillis();
 		}
-
+		if(this.getEffects().contains(StatusEffect.BUBBLE)) this.heal(30 * dt);
 		super.tick(dt);
 	}
 
@@ -192,6 +192,13 @@ public class Player extends Character {
 	public void activatePower5() {
 		if(this.getMana() >= 100) {
 			this.addStatusEffect(StatusEffect.FROZEN);
+			this.takeMana(100);
+		}
+	}
+
+	public void activatePower6() {
+		if(this.getMana() >= 100) {
+			this.addStatusEffect(StatusEffect.BUBBLE);
 			this.takeMana(100);
 		}
 	}

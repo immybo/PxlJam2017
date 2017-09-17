@@ -18,6 +18,8 @@ public class GameFrame extends JFrame implements ControllerListener {
     public final static char POWER_3 = '3';
     public final static char POWER_4 = '4';
     public final static char POWER_5 = '5';
+    public final static char POWER_6 = '6';
+
 
     private GameEventListener listener;
 
@@ -109,6 +111,9 @@ public class GameFrame extends JFrame implements ControllerListener {
                         break;
                     case POWER_5:
                         listener.onPower5();
+                        break;
+                    case POWER_6:
+                        listener.onPower6();
                         break;
                 }
             }

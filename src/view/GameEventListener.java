@@ -28,6 +28,7 @@ public class GameEventListener {
 	public void onPower3() { level.getPlayer().activatePower3(); } //do the thing
 	public void onPower4() { level.getPlayer().activatePower4(); } //do the thing
 	public void onPower5() { level.getPlayer().activatePower5(); } //do the thing
+	public void onPower6() { level.getPlayer().activatePower6(); } //do the thing
 
 	public void setLevel(Level level) {
 		this.level = level;

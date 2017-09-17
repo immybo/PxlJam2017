@@ -45,6 +45,7 @@ public class Player extends Character {
 		this.textureChangeTime = System.currentTimeMillis();
 		this.defaultAABB = aabb;
 		this.manaPool = 100;
+		this.lastShotTime = System.currentTimeMillis();
 
 		Vector crawlingCenter = new Vector(defaultAABB.center.x, defaultAABB.center.y + (defaultAABB.get_size().y*0.25));
 		Vector crawlingSize = new Vector(defaultAABB.get_size().x, defaultAABB.get_size().y*0.25);
@@ -57,7 +58,8 @@ public class Player extends Character {
 	}
 
 	public void shoot(boolean isRight){
-		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate && !this.getEffects().contains(StatusEffect.FROZEN) && this.manaPool > 0) {
+		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate && !this.getEffects().contains(StatusEffect.FROZEN) && this.manaPool >= 0.7) {
+			this.lastShotTime = System.currentTimeMillis();
 			StatusEffect statusEffect = StatusEffect.NONE;
 			if(this.getEffects().contains(StatusEffect.POISONED)) statusEffect = StatusEffect.DOT;
 			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);

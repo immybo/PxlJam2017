@@ -1,0 +1,7 @@
+Poison boy: doesn't shoot, no damage on touch, reverses player controls, damage over time bullets for player
+Spike boy: shoots spikes, damage on touch, player spiky so deals damage on touch
+Bubble boy: shoots bubbles that do no damage, make player unable to move, heals player heavily
+Burn boy: shoots fire, burn damage over time, no damage on touch, makes player run faster
+Squish boy: shoots nothing, jumps randomly, land on player squishes player making them shorter and can fit in smaller places
+Freeze boy: shoots ice, ice freezes player cannot change movement but also takes no damage
+Broken-leg effect: Fall from too high breaks leg, reduces x movement speed, increases jump, jump now breaks legs, also makes you shorter

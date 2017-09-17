@@ -72,9 +72,9 @@ public abstract class Character extends AbstractEntity {
 		else if (effects.contains(StatusEffect.FROZEN))
 		{} // Do not change velocity when frozen
 		else if(this.getMovement() == Movement.MOVE_RIGHT)
-			xSpeed = getMovementSpeed() * dt;
+			xSpeed = this.effects.contains(StatusEffect.POISONED) ? -getMovementSpeed() * dt : getMovementSpeed() * dt;
 		else if(this.getMovement() == Movement.MOVE_LEFT)
-			xSpeed = -getMovementSpeed() * dt;
+			xSpeed = this.effects.contains(StatusEffect.POISONED) ? getMovementSpeed() * dt : -getMovementSpeed() * dt;
 		else
 			xSpeed = 0;
 
@@ -88,6 +88,9 @@ public abstract class Character extends AbstractEntity {
 		if(effects.contains(StatusEffect.BROKEN_LEG)) {
 			Vector vel = this.getVelocity();
 			this.setVelocity(new Vector(vel.x*0.5, vel.y));
+		}
+		if(effects.contains(StatusEffect.DOT)) {
+			this.damage(5 * dt);
 		}
 		for(StatusEffect s : StatusEffect.values()){
 			if(this.statusTimeouts.get(s) <= System.currentTimeMillis()) {

@@ -58,9 +58,11 @@ public class Player extends Character {
 
 	public void shoot(boolean isRight){
 		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
+			StatusEffect statusEffect = StatusEffect.NONE;
+			if(this.getEffects().contains(StatusEffect.POISONED)) statusEffect = StatusEffect.DOT;
 			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);
 			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
-			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, StatusEffect.NONE);
+			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, statusEffect);
 			this.getLevel().addEntity(bullet);
 			SoundPlayer.playSound("resources/gun.wav");
 		}
@@ -164,43 +166,71 @@ public class Player extends Character {
 
 	public void activatePower1() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.POISONED);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.POISONED);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower2() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.BROKEN_LEG);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.BROKEN_LEG);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower3() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.ON_FIRE);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.ON_FIRE);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower4() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.SPIKY);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.SPIKY);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower5() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.FROZEN);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.FROZEN);
+				this.takeMana(100);
+			}
 		}
+	}
+
+	private void activateRandomPower() {
+		this.addStatusEffect(StatusEffect.values()[(int)(Math.random()*StatusEffect.values().length)]);
 	}
 	
 	public void collide(Entity o) {
 		if(o instanceof SquishBoy) {
 			System.out.println("squish");
 			this.addStatusEffect(StatusEffect.FLATTENED);
+		}
+		else if(o instanceof SpikeBoy) {
+			this.addStatusEffect(StatusEffect.SPIKY);
+			this.damage(20);
 		}
 	}
 

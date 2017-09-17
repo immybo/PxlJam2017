@@ -16,6 +16,7 @@ public class PoissonBoy extends Enemy {
 		Vector min = getAABB().min();
 		Vector ext = getAABB().extents;
 		g.drawImage(Textures.POISSON_BOY, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
+        super.render(g);
     }
 
     @Override

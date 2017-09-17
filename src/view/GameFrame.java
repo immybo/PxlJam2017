@@ -32,7 +32,6 @@ public class GameFrame extends JFrame implements ControllerListener {
         this.levelIndex = 0;
 
         this.listener = listener;
-        this.listener.setLevel(levels[levelIndex]);
 
         restart();
 

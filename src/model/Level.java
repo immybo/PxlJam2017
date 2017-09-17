@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.ControllerListener;
+import controller.SoundPlayer;
 
 
 public class Level {
@@ -155,6 +156,7 @@ public class Level {
 									// If we're going fast enough, break our legs...
 									if (velY > 14) { //Magic number velocity we are have to be going to break leg
 										getPlayer().addStatusEffect(StatusEffect.BROKEN_LEG);
+										SoundPlayer.playSound("resources/breakleg.wav");
 									}
 									getPlayer().setOnGround(true);
 								}

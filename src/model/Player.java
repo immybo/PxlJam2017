@@ -179,6 +179,7 @@ public class Player extends Character {
 			if (this.getEffects().contains(StatusEffect.POISONED)) {
 				activateRandomPower();
 			} else {
+				SoundPlayer.playSound("resources/breakleg.wav");
 				this.addStatusEffect(StatusEffect.BROKEN_LEG);
 				this.takeMana(100);
 			}

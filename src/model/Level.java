@@ -269,7 +269,8 @@ public class Level {
 				}
 				else if (att.equals("DIALOGBOY-SPAWN:")){
 					double xtrigger = Double.parseDouble(reader.next());
-					level.addEntity(new DialogBoy(xtrigger, reader.nextLine(), level));
+					double length = Double.parseDouble(reader.next());
+					level.addEntity(new DialogBoy(xtrigger, length, reader.nextLine(), level));
 					reader.nextLine();
 				}
 			}

@@ -195,6 +195,12 @@ public class Player extends Character {
 			this.takeMana(100);
 		}
 	}
+	
+	public void collide(Entity o) {
+		if(o instanceof SquishBoy) {
+			System.out.println("squish");
+		}
+	}
 
 
 }

@@ -84,4 +84,9 @@ public class AbstractEntity implements Entity {
 	public Vector getVelocity() {
 		return getAABB().velocity;
 	}
+
+	@Override
+	public void collide(Entity o) {
+		
+	}
 }

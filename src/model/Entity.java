@@ -18,4 +18,5 @@ public interface Entity {
 	public Vector getVelocity();
 	public boolean isSolid();
 	public Level getLevel();
+	public void collide(Entity o);
 }

@@ -147,6 +147,8 @@ public class Level {
 							}
 
 							double newY = e.getAABB().center.y;
+							
+							e.collide(o);
 
 							if (e instanceof Player) {
 								if (velY > 0 && oldY > newY) {

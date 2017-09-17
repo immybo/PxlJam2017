@@ -94,9 +94,6 @@ public class GameFrame extends JFrame implements ControllerListener {
                     case JUMP_KEY:
                         listener.onJumpPressed();
                         break;
-                    case RESTART_KEY:
-                        restart();
-                        break;
                     case POWER_1:
                         listener.onPower1();
                         break;

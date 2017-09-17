@@ -237,6 +237,7 @@ public class Player extends Character {
 
 	public void activatePower6() {
 		if(this.getMana() >= 100) {
+			this.getEffects().clear();
 			this.addStatusEffect(StatusEffect.BUBBLE);
 			this.takeMana(100);
 		}

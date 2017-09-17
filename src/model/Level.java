@@ -114,6 +114,8 @@ public class Level {
 							this.removeEntity(e);
 						else if(ent instanceof Player && !((Bullet) e).friendler){
 							((Character)ent).damage(((Bullet) e).getDamage());
+							if(((Bullet) e).effect == StatusEffect.BUBBLE)
+								((Player) ent).getEffects().clear();
 							((Player)ent).addStatusEffect(((Bullet) e).effect);
 							this.removeEntity(e);
 						}

@@ -20,8 +20,8 @@ import javax.swing.Timer;
 
 public class Main {
 	public static final String[] LEVELS = {
-			"resources/levels/testLevel",
 			"resources/levels/poisson.txt",
+			"resources/levels/testLevel",
 			"resources/levels/testLevel"
 	};
 
@@ -41,6 +41,10 @@ public class Main {
 						Level level = gf.getLevel();
 						level.tick(((float)delay)/1000f);
 		    			gf.repaint();
+
+		    			if (level.getPlayer().getAABB().center.y > 5000) {
+		    				gf.onPlayerDeath();
+						}
 		    		}
 			  };
 			  new Timer(delay, taskPerformer).start();

@@ -163,37 +163,61 @@ public class Player extends Character {
 
 	public void activatePower1() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.POISONED);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.POISONED);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower2() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.BROKEN_LEG);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.BROKEN_LEG);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower3() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.ON_FIRE);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.ON_FIRE);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower4() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.SPIKY);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.SPIKY);
+				this.takeMana(100);
+			}
 		}
 	}
 
 	public void activatePower5() {
 		if(this.getMana() >= 100) {
-			this.addStatusEffect(StatusEffect.FROZEN);
-			this.takeMana(100);
+			if (this.getEffects().contains(StatusEffect.POISONED)) {
+				activateRandomPower();
+			} else {
+				this.addStatusEffect(StatusEffect.FROZEN);
+				this.takeMana(100);
+			}
 		}
+	}
+
+	private void activateRandomPower() {
+		this.addStatusEffect(StatusEffect.values()[(int)(Math.random()*StatusEffect.values().length)]);
 	}
 	
 	public void collide(Entity o) {

@@ -57,7 +57,7 @@ public class Player extends Character {
 	}
 
 	public void shoot(boolean isRight){
-		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate) {
+		if(System.currentTimeMillis() - lastShotTime >= 1.0/shootRate && !this.getEffects().contains(StatusEffect.FROZEN)) {
 			StatusEffect statusEffect = StatusEffect.NONE;
 			if(this.getEffects().contains(StatusEffect.POISONED)) statusEffect = StatusEffect.DOT;
 			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);

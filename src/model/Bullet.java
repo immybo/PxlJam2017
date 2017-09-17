@@ -33,4 +33,12 @@ public class Bullet extends AbstractEntity {
         Vector ext = getAABB().extents;
         g.drawImage(texture, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
     }
+
+    @Override
+    public void tick(double dt) {
+        if (this.getAABB().center.sub(this.getLevel().getPlayer().getAABB().center).mag() > 100000) {
+            this.getLevel().removeEntity(this);
+        }
+        super.tick(dt);
+    }
 }

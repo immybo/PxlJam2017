@@ -92,12 +92,15 @@ public abstract class Character extends AbstractEntity {
 
 	public double getHealth(){ return health; }
 	public int getMaxHealth(){ return 100;}
+	public void heal(double healing) {
+		this.health = this.getMaxHealth() <= this.getHealth() + healing ? this.getMaxHealth() : this.getHealth()+healing;
+	}
 	public boolean legBroken(){ return effects.contains(StatusEffect.BROKEN_LEG); }
 
 	public void damage(double damage){
 		if(!effects.contains(StatusEffect.FROZEN))
 			this.health -= damage;
-		}
+	}
 
 	public abstract int getMovementSpeed();
 }

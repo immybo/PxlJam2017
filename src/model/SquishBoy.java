@@ -12,7 +12,7 @@ public class SquishBoy extends Enemy{
 
     private void jump(double dt){
         if(Math.random() < .03 && this.getVelocity().y >= 0){
-            this.applyForce(new Vector(0, -1500));
+            this.applyForce(new Vector(0, -1600));
         }
     }
     
@@ -29,12 +29,16 @@ public class SquishBoy extends Enemy{
         jump(dt);
         super.tick(dt);
     }
+    
+    private boolean hasDamaged = false;
 
 	public void collide(Entity o) {
 		if(o instanceof Character) {
 			Character c = ((Character) o);
-			if(!c.getEffects().contains(StatusEffect.FLATTENED))
+			if(!hasDamaged) {
+				hasDamaged = true;
 				c.damage(10);
+			}
 			c.addStatusEffect(StatusEffect.FLATTENED);
 		}
 	}

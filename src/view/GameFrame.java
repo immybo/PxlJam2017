@@ -190,8 +190,12 @@ public class GameFrame extends JFrame implements ControllerListener {
         SoundPlayer.playSound("resources/win.wav");
 
         if (levelIndex == levels.length) {
-            JOptionPane.showMessageDialog(this, "You've finished all the levels. Click OK to start again.");
-            levelIndex = 0;
+            showOverlayMessage("You've finished all the levels!", Color.WHITE, 5000, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
         }
 
         restart();

@@ -64,7 +64,7 @@ public class Player extends Character {
 			if(this.getEffects().contains(StatusEffect.POISONED)) statusEffect = StatusEffect.DOT;
 			Vector vector = isRight ? new Vector(15,0) : new Vector(-15,0);
 			AABB bulletAABB = new AABB(this.getAABB().center, this.getAABB().extents.mult(0.1), this.getVelocity(), null);
-			Bullet bullet = new Bullet(bulletAABB, 0, 0, this.getLevel(), 10, vector, true, statusEffect);
+			Bullet bullet = new Bullet(bulletAABB, new Color(0x000000), 0, 0, this.getLevel(), 10, vector, true, statusEffect);
 			this.getLevel().addEntity(bullet);
 			SoundPlayer.playSound("resources/gun.wav");
 			this.takeMana(0.7);
@@ -228,11 +228,7 @@ public class Player extends Character {
 	}
 	
 	public void collide(Entity o) {
-		if(o instanceof SquishBoy) {
-			System.out.println("squish");
-			this.addStatusEffect(StatusEffect.FLATTENED);
-		}
-		else if(o instanceof SpikeBoy) {
+		if(o instanceof SpikeBoy) {
 			this.addStatusEffect(StatusEffect.SPIKY);
 			this.damage(20);
 		}

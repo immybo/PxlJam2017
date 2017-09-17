@@ -24,6 +24,7 @@ public class SpikeBoy extends Enemy{
 		Vector min = getAABB().min();
 		Vector ext = getAABB().extents;
 		g.drawImage(Textures.SPIKE_BOY, (int) min.x, (int) min.y, (int) (2 * ext.x), (int) (2 * ext.y), null);
+        super.render(g);
     }
 
     private void shoot(double dt) {

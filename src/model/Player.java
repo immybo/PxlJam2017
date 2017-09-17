@@ -200,6 +200,10 @@ public class Player extends Character {
 		if(o instanceof SquishBoy) {
 			System.out.println("squish");
 		}
+		else if(o instanceof SpikeBoy) {
+			this.addStatusEffect(StatusEffect.SPIKY);
+			this.damage(20);
+		}
 	}
 
 	public void activatePower6() {

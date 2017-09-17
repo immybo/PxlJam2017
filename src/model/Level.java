@@ -226,32 +226,38 @@ public class Level {
 				}
 				else if (att.equals("FREEZEBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(15,25), null, null), 0, 100, level);
+					FreezeBoy freezeBoy = new FreezeBoy(new AABB(spawn, new Vector(61,101).mult(0.4), null, null), 0, 100, level);
 					level.addEntity(freezeBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("BURNBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					BurnBoy burnBoy= new BurnBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					BurnBoy burnBoy= new BurnBoy(new AABB(spawn, new Vector(128,117).mult(0.4), null, null), 0, 100, level);
 					level.addEntity(burnBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("SPIKEBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					SpikeBoy spikeBoy= new SpikeBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
+					SpikeBoy spikeBoy= new SpikeBoy(new AABB(spawn, new Vector(128,75).mult(0.4), null, null), 0, 100, level);
 					level.addEntity(spikeBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("SQUISHBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(25,25).mult(10), null, null), 0, 100, level);
+					SquishBoy squishBoy= new SquishBoy(new AABB(spawn, new Vector(93,128), null, null), 0, 100, level);
 					level.addEntity(squishBoy);
 					reader.nextLine();
 				}
 				else if (att.equals("POISSONBOY-SPAWN:")){
 					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
-					PoissonBoy squishBoy= new PoissonBoy(new AABB(spawn, new Vector(25,25), null, null), 0, 100, level);
-					level.addEntity(squishBoy);
+					PoissonBoy poissonBoy= new PoissonBoy(new AABB(spawn, new Vector(128,124).mult(0.4), null, null), 0, 100, level);
+					level.addEntity(poissonBoy);
+					reader.nextLine();
+				}
+				else if (att.equals("BUBBLEBOY-SPAWN:")){
+					Vector spawn = new Vector(Double.parseDouble(reader.next()), Double.parseDouble(reader.next()));
+					BubbleBoy bubbleBoy= new BubbleBoy(new AABB(spawn, new Vector(58,128).mult(0.4), null, null), 0, 100, level);
+					level.addEntity(bubbleBoy);
 					reader.nextLine();
 				}
 			}
